@@ -91,7 +91,7 @@ That's all you need for your first simple state!
 
 ## Future
 
-I am going to be making several additions before officially releasing to npm.
+There will still be several more additions before officially releasing to npm.
  * computed values, which will also be assigned to `state.getters`
  * an option to make actions work asynchronously
  * integration with graphQL
