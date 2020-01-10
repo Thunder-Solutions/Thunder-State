@@ -1,0 +1,36 @@
+{
+  "name": "simple-state",
+  "version": "0.0.1",
+  "description": "Complex state management made easy.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://jonathandewitt-dev@github.com/jonathandewitt-dev/simple-state.git"
+  },
+  "keywords": [
+    "state",
+    "state-management",
+    "simple",
+    "easy"
+  ],
+  "author": "Jonathan DeWitt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jonathandewitt-dev/simple-state/issues"
+  },
+  "homepage": "https://github.com/jonathandewitt-dev/simple-state#readme",
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "jest": "^24.9.0",
+    "rollup": "^1.27.3",
+    "rollup-jest": "0.0.2",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.5.0",
+    "rollup-plugin-terser": "^5.1.3"
+  }
+}
