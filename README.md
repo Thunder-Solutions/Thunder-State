@@ -61,13 +61,13 @@ const state = new State({
   },
 
   actions: {
-    changeUsername(state, payload) {
+    changeUsername({state, payload}) {
       state.user.username = payload
     },
-    toggleLogin(state, payload) {
+    toggleLogin({state, payload}) {
       state.loggedIn = payload
     },
-    toggleAlert(state, payload) {
+    toggleAlert({state, payload}) {
       state.alert.visible = payload
     },
   },
