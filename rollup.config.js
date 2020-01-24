@@ -2,6 +2,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import babel from 'rollup-plugin-babel'
 import sourcemaps from 'rollup-plugin-sourcemaps'
 import { terser } from 'rollup-plugin-terser'
+import regenerator from 'rollup-plugin-regenerator'
 
 export default {
 	input: 'src/index.js',
@@ -30,6 +31,7 @@ export default {
 		babel({
 			exclude: 'node_modules/**'
 		}),
-		terser(),
+    terser(),
+    regenerator(),
 	],
 }
