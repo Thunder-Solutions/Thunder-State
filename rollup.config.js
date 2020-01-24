@@ -5,8 +5,8 @@ import { terser } from 'rollup-plugin-terser'
 import regenerator from 'rollup-plugin-regenerator'
 
 export default {
-	input: 'src/index.js',
-	output: [
+  input: 'src/index.js',
+  output: [
     {
       file: 'esm/simpleState.min.mjs',
       format: 'esm',
@@ -25,13 +25,13 @@ export default {
       compact: true,
     },
   ],
-	plugins: [
+  plugins: [
     sourcemaps(),
-		resolve(),
-		babel({
-			exclude: 'node_modules/**'
-		}),
+    resolve(),
+    babel({
+      exclude: 'node_modules/**'
+    }),
     terser(),
     regenerator(),
-	],
+  ],
 }

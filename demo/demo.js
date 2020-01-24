@@ -1,6 +1,6 @@
 // This is for testing the final build:
-// import State from '../esm/simpleState.min.mjs'
-import State from '../lib/State.js'
+import State from '../esm/simpleState.min.mjs'
+// import State from '../lib/State.js'
 
 const appState = new State({
 
@@ -32,16 +32,19 @@ const appState = new State({
   },
 })
 
+let value = ''
+appState.watchers.account.user.username(newValue => value = newValue)
 appState.dispatchers.switchUser('example_user_two')
 appState.dispatchers.switchAccount('fake_two@email.com')
 appState.dispatchers.switchUser('example_user_three')
 appState.dispatchers.switchAccount('fake_three@gmail.com').then(() => {
-  console.log(state.getters.account.user.username)
-  console.log(state.getters.account.settings.email)
-  state.timeTravel(-2)
-  console.log(state.getters.account.user.username)
-  console.log(state.getters.account.settings.email)
-  state.timeTravel(1)
-  console.log(state.getters.account.user.username)
-  console.log(state.getters.account.settings.email)
+  console.log(value)
+  // console.log(state.getters.account.user.username)
+  // console.log(state.getters.account.settings.email)
+  // state.timeTravel(-2)
+  // console.log(state.getters.account.user.username)
+  // console.log(state.getters.account.settings.email)
+  // state.timeTravel(1)
+  // console.log(state.getters.account.user.username)
+  // console.log(state.getters.account.settings.email)
 })
