@@ -83,8 +83,8 @@ console.log(state.getters.user.username) // 'demo_user'
 
 Change the state by dispatching the actions defined above.
 ```js
-state.dispatch('changeUsername', 'new_user')
-state.dispatch('toggleAlert', false)
+state.dispatchers.changeUsername('new_user')
+state.dispatchers.toggleAlert(false)
 ```
 
 That's all you need for your first simple state!

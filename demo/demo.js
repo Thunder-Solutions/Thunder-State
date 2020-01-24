@@ -2,7 +2,7 @@
 // import State from '../esm/simpleState.min.mjs'
 import State from '../lib/State.js'
 
-const state = new State({
+const appState = new State({
 
   debugVariable: 'state',
 
@@ -32,10 +32,10 @@ const state = new State({
   },
 })
 
-state.dispatch('switchUser', 'example_user_two')
-state.dispatch('switchAccount', 'fake_two@email.com')
-state.dispatch('switchUser', 'example_user_three')
-state.dispatch('switchAccount', 'fake_three@gmail.com').then(() => {
+appState.dispatchers.switchUser('example_user_two')
+appState.dispatchers.switchAccount('fake_two@email.com')
+appState.dispatchers.switchUser('example_user_three')
+appState.dispatchers.switchAccount('fake_three@gmail.com').then(() => {
   console.log(state.getters.account.user.username)
   console.log(state.getters.account.settings.email)
   state.timeTravel(-2)
