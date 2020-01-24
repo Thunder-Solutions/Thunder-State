@@ -87,14 +87,11 @@ state.dispatchers.changeUsername('new_user')
 state.dispatchers.toggleAlert(false)
 ```
 
-That's all you need for your first simple state!
-
-## Future
-
-There will still be several more additions before officially releasing to npm.
- * computed values, which will also be assigned to `state.getters`
- * an option to make actions work asynchronously
- * integration with graphQL
+That's all you need for your first simple state!  Additionally, there are more options to make your state even more powerful, such as:
+ * computed values
+ * watchers
+ * asynchronous actions
+ * time travel debugging
 
 ## Maintainers
 
