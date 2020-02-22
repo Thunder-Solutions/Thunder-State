@@ -1,5 +1,5 @@
 {
-  "name": "simple-state",
+  "name": "@jonathandewitt-dev/simple-state",
   "version": "0.0.1",
   "description": "Complex state management made easy.",
   "main": "src/index.js",

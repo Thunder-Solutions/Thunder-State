@@ -19,7 +19,7 @@ Your work environment should be as easy as possible, so simple tasks don't requi
 NOTE: This has not yet been published, please be patient while I finish the development.
 
 ```
-npm i simple-state
+npm i @jonathandewitt-dev/simple-state
 ```
 
 ## Usage
