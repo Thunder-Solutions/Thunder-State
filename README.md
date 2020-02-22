@@ -26,10 +26,10 @@ npm i @jonathandewitt-dev/simple-state
 
 First, either import the State object ...
 ```js
-import { State } from 'simple-state'
+import { State } from '@jonathandewitt-dev/simple-state'
 
 // or get the same object by importing the default export
-import MyStateName from 'simple-state'
+import MyStateName from '@jonathandewitt-dev/simple-state'
 ```
 ... or include it as a UMD.
 ```html
