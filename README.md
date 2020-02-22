@@ -93,6 +93,8 @@ That's all you need for your first simple state!  Additionally, there are more o
  * asynchronous actions
  * time travel debugging
 
+Read more about these features in the [documentation](https://github.com/jonathandewitt-dev/simple-state/wiki).
+
 ## Maintainers
 
 [@jonathandewitt-dev](https://github.com/jonathandewitt-dev)
