@@ -31,7 +31,7 @@ import MyStateName from '@jonathandewitt-dev/simple-state'
 ```
 ... or include it as a UMD.
 ```html
-<script src="https://unpkg.com/simple-state/umd/simpleState.min.js"></script>
+<script src="https://unpkg.com/@jonathandewitt-dev/simple-state/umd/simpleState.min.js"></script>
 <script>
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Object_destructuring
   const { State } = SimpleState
