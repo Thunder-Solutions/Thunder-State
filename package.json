@@ -16,7 +16,9 @@
     "state",
     "state-management",
     "simple",
-    "easy"
+    "easy",
+    "vuex",
+    "redux"
   ],
   "author": "Jonathan DeWitt",
   "license": "MIT",
