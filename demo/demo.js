@@ -2,9 +2,9 @@
 import State from '../esm/simpleState.min.mjs'
 // import State from '../lib/State.js'
 
-const appState = new State({
+window.appState = new State({
 
-  debugVariable: 'state',
+  name: 'Demo',
 
   // set up the structure and set the initial state
   state: {
@@ -32,19 +32,16 @@ const appState = new State({
   },
 })
 
-let value = ''
-appState.watchers.account.user.username(newValue => value = newValue)
+// DOM queries and watchers to reflect in UI
+const usernameEl = document.querySelector('.username-js')
+const emailEl = document.querySelector('.email-js')
+usernameEl.textContent = appState.getters.account.user.username
+emailEl.textContent = appState.getters.account.settings.email
+appState.watchers.account.user.username(newValue => usernameEl.textContent = newValue)
+appState.watchers.account.settings.email(newValue => emailEl.textContent = newValue)
+
+
 appState.dispatchers.switchUser('example_user_two')
 appState.dispatchers.switchAccount('fake_two@email.com')
 appState.dispatchers.switchUser('example_user_three')
-appState.dispatchers.switchAccount('fake_three@gmail.com').then(() => {
-  console.log(value)
-  // console.log(state.getters.account.user.username)
-  // console.log(state.getters.account.settings.email)
-  // state.timeTravel(-2)
-  // console.log(state.getters.account.user.username)
-  // console.log(state.getters.account.settings.email)
-  // state.timeTravel(1)
-  // console.log(state.getters.account.user.username)
-  // console.log(state.getters.account.settings.email)
-})
+appState.dispatchers.switchAccount('fake_three@email.com')
