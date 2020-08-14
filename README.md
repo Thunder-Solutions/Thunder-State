@@ -1,4 +1,4 @@
-# simple-state
+# Thunder State
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
@@ -17,24 +17,24 @@ Your work environment should be as easy as possible, so simple tasks don't requi
 ## Install
 
 ```
-npm i @jonathandewitt-dev/simple-state
+npm i @thundersolutions/thunder-state
 ```
 
 ## Usage
 
 First, either import the State object ...
 ```js
-import { State } from '@jonathandewitt-dev/simple-state'
+import { State } from '@thundersolutions/thunder-state'
 
 // or get the same object by importing the default export
-import MyStateName from '@jonathandewitt-dev/simple-state'
+import MyStateName from '@thundersolutions/thunder-state'
 ```
 ... or include it as a UMD.
 ```html
-<script src="https://unpkg.com/@jonathandewitt-dev/simple-state/umd/simpleState.min.js"></script>
+<script src="https://unpkg.com/@thundersolutions/thunder-state/umd/thunderState.min.js"></script>
 <script>
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Object_destructuring
-  const { State } = SimpleState
+  const { State } = ThunderState
 </script>
 ```
 
@@ -91,7 +91,7 @@ That's all you need for your first simple state!  Additionally, there are more o
  * asynchronous actions
  * time travel debugging
 
-Read more about these features in the [documentation](https://github.com/jonathandewitt-dev/simple-state/wiki).
+Read more about these features in the [documentation](https://github.com/thunder-solutions/thunder-state/wiki).
 
 ## Maintainers
 

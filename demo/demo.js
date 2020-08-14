@@ -45,3 +45,22 @@ appState.dispatchers.switchUser('example_user_two')
 appState.dispatchers.switchAccount('fake_two@email.com')
 appState.dispatchers.switchUser('example_user_three')
 appState.dispatchers.switchAccount('fake_three@email.com')
+
+window.otherState = new State({
+
+  name: 'Test',
+
+  state: {
+    color: 'red',
+    someOtherVal: true,
+    thisIsATest: 'hello world'
+  },
+  
+  actions: {
+    changeColor({state, payload}) {
+      state.color = payload
+    },
+  },
+})
+
+otherState.dispatchers.changeColor('blue')
