@@ -1,6 +1,6 @@
 {
-  "name": "@jonathandewitt-dev/simple-state",
-  "version": "0.0.8",
+  "name": "@thundersolutions/state",
+  "version": "0.0.1",
   "description": "Complex state management made easy.",
   "main": "src/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://jonathandewitt-dev@github.com/jonathandewitt-dev/simple-state.git"
+    "url": "git+https://github.com/thunder-solutions/thunder-state.git"
   },
   "keywords": [
     "state",
@@ -23,9 +23,9 @@
   "author": "Jonathan DeWitt",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jonathandewitt-dev/simple-state/issues"
+    "url": "https://github.com/thunder-solutions/thunder-state/issues"
   },
-  "homepage": "https://github.com/jonathandewitt-dev/simple-state#readme",
+  "homepage": "https://github.com/thunder-solutions/thunder-state#readme",
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",

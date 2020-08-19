@@ -17,21 +17,21 @@ Your work environment should be as easy as possible, so simple tasks don't requi
 ## Install
 
 ```
-npm i @thundersolutions/thunder-state
+npm i @thundersolutions/state
 ```
 
 ## Usage
 
 First, either import the State object ...
 ```js
-import { State } from '@thundersolutions/thunder-state'
+import { State } from '@thundersolutions/state'
 
 // or get the same object by importing the default export
-import MyStateName from '@thundersolutions/thunder-state'
+import MyStateName from '@thundersolutions/state'
 ```
 ... or include it as a UMD.
 ```html
-<script src="https://unpkg.com/@thundersolutions/thunder-state/umd/thunderState.min.js"></script>
+<script src="https://unpkg.com/@thundersolutions/state/umd/thunderState.min.js"></script>
 <script>
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Object_destructuring
   const { State } = ThunderState

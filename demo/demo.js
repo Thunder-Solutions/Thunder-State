@@ -1,5 +1,5 @@
 // This is for testing the final build:
-import State from '../esm/simpleState.min.mjs'
+import State from '../esm/thunderState.min.mjs'
 // import State from '../lib/State.js'
 
 window.appState = new State({

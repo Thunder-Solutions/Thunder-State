@@ -6,4 +6,4 @@ app.use(express.static(__dirname))
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/demo/demo.html'))
 
-app.listen(port, () => console.log(`Simple State demo listening on port ${port}!`))
+app.listen(port, () => console.log(`Thunder-State demo listening on port ${port}!`))
