@@ -2,7 +2,7 @@
   "name": "@thundersolutions/state",
   "version": "0.0.1",
   "description": "Complex state management made easy.",
-  "main": "src/index.js",
+  "main": "dist/thunderState.min.js",
   "scripts": {
     "build": "rollup --config",
     "test": "jest",
