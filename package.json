@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Complex state management made easy.",
   "main": "dist/thunderState.min.js",
+  "module": "esm/thunderstate.min.mjs",
   "scripts": {
     "build": "rollup --config",
     "test": "jest",
