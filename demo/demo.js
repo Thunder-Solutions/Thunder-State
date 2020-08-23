@@ -52,7 +52,7 @@ window.otherState = new State({
 
   state: {
     color: 'red',
-    someOtherVal: true,
+    someOtherVal: null,
     thisIsATest: [
       'hello world',
       'another value',
@@ -66,9 +66,14 @@ window.otherState = new State({
 
     addValue({state, payload}) {
       state.thisIsATest.push(payload)
-    }
+    },
+
+    changeValue({state, payload}) {
+      state.someOtherVal = payload
+    },
   },
 })
 
 otherState.dispatchers.changeColor('blue')
 otherState.dispatchers.addValue('oh look, another!')
+otherState.dispatchers.changeValue(false)
