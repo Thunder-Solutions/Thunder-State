@@ -38,6 +38,11 @@ const emailEl = document.querySelector('.email-js')
 usernameEl.textContent = appState.getters.account.user.username
 emailEl.textContent = appState.getters.account.settings.email
 appState.watchers.account.user.username(newValue => usernameEl.textContent = newValue)
+appState.watchers.account.user.username((newValue, destroy) => {
+  console.log('watcher1', newValue)
+  destroy()
+})
+appState.watchers.account.user.username(newValue => console.log('watcher2', newValue))
 appState.watchers.account.settings.email(newValue => emailEl.textContent = newValue)
 
 
