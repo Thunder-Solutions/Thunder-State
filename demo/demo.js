@@ -62,6 +62,11 @@ window.otherState = new State({
       'hello world',
       'another value',
     ],
+    anotherTest: [
+      { name: 'one', value: 1 },
+      { name: 'two', value: 2 },
+      { name: 'three', value: 3 },
+    ],
   },
   
   actions: {
@@ -73,6 +78,14 @@ window.otherState = new State({
       state.thisIsATest.push(payload)
     },
 
+    removeValue({state, payload: [index, count]}) {
+      state.thisIsATest.splice(index, count)
+    },
+
+    changeValueInList({state, payload: [index, value]}) {
+      state.thisIsATest[index] = value
+    },
+
     changeValue({state, payload}) {
       state.someOtherVal = payload
     },
@@ -80,5 +93,7 @@ window.otherState = new State({
 })
 
 otherState.dispatchers.changeColor('blue')
+otherState.dispatchers.changeValueInList([1, 'a different another value'])
 otherState.dispatchers.addValue('oh look, another!')
+otherState.dispatchers.removeValue([1, 1])
 otherState.dispatchers.changeValue(false)
