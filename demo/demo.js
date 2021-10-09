@@ -1,5 +1,5 @@
 // This is for testing the final build:
-import State from '../esm/thunderState.min.mjs'
+import State, { createState } from '../esm/thunderState.min.mjs'
 // import State from '../lib/State.js'
 
 window.appState = new State({
@@ -52,7 +52,7 @@ emailEl.textContent = appState.getters.account.settings.email
 // appState.dispatchers.switchUser('example_user_three')
 // appState.dispatchers.switchAccount('fake_three@email.com')
 
-window.otherState = new State({
+window.otherState = createState({
 
   name: 'Test',
 
