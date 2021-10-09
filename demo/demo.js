@@ -93,12 +93,12 @@ window.otherState = createState({
   },
 })
 
-otherState.watchers.thisIsATest(newVal => {
-  console.log('array changed:', newVal)
-})
+// otherState.watchers.thisIsATest(newVal => {
+//   console.log('array changed:', newVal)
+// })
 
-otherState.dispatchers.changeColor('blue')
-otherState.dispatchers.changeValueInList([1, 'a different another value'])
+// otherState.dispatchers.changeColor('blue')
+// otherState.dispatchers.changeValueInList([1, 'a different another value'])
 otherState.dispatchers.removeValue([1, 1])
-otherState.dispatchers.addValue('oh look, another!')
-otherState.dispatchers.changeValue(false)
+// otherState.dispatchers.addValue('oh look, another!')
+// otherState.dispatchers.changeValue(false)
