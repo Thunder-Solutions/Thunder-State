@@ -2,6 +2,21 @@
 // https://jestjs.io/docs/en/configuration.html
 
 module.exports = {
+
+  // Automatically clear mock calls and instances between every test
+  clearMocks: true,
+
+  // The directory where Jest should output its coverage files
+  coverageDirectory: "coverage",
+
+  // A preset that is used as a base for Jest's configuration
+  preset: 'rollup-jest',
+
+  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
+  transformIgnorePatterns: [
+    "<rootDir>/node_modules/(?!lodash-es/.*)"
+  ],
+
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -14,17 +29,11 @@ module.exports = {
   // The directory where Jest should store its cached dependency information
   // cacheDirectory: "C:\\Users\\jonat\\AppData\\Local\\Temp\\jest",
 
-  // Automatically clear mock calls and instances between every test
-  clearMocks: true,
-
   // Indicates whether the coverage information should be collected while executing the test
   // collectCoverage: false,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   // collectCoverageFrom: null,
-
-  // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -89,9 +98,6 @@ module.exports = {
 
   // An enum that specifies notification mode. Requires { notify: true }
   // notifyMode: "failure-change",
-
-  // A preset that is used as a base for Jest's configuration
-  preset: 'rollup-jest',
 
   // Run tests from one or more projects
   // projects: null,
@@ -168,11 +174,6 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   // transform: null,
-
-  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  transformIgnorePatterns: [
-    "<rootDir>/node_modules/(?!lodash-es/.*)"
-  ],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
