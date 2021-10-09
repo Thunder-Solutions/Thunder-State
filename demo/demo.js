@@ -98,7 +98,7 @@ window.otherState = createState({
 // })
 
 // otherState.dispatchers.changeColor('blue')
-// otherState.dispatchers.changeValueInList([1, 'a different another value'])
+otherState.dispatchers.changeValueInList([1, 'a different another value'])
 otherState.dispatchers.removeValue([1, 1])
-// otherState.dispatchers.addValue('oh look, another!')
+otherState.dispatchers.addValue('oh look, another!')
 // otherState.dispatchers.changeValue(false)
