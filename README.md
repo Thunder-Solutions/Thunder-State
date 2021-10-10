@@ -33,13 +33,14 @@ import State from '@thundersolutions/state'
 
 // You can also get the `createState()` factory function from the State class
 const { createState } = State
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Object_destructuring
 ```
 ... Or include it as a UMD.
 ```html
 <script src="https://unpkg.com/@thundersolutions/state/umd/thunderState.min.js"></script>
 <script>
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Object_destructuring
   const { State, createState } = ThunderState
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Object_destructuring
 </script>
 ```
 
