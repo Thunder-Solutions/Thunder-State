@@ -22,19 +22,24 @@ npm i @thundersolutions/state
 
 ## Usage
 
-First, either import the State object ...
+First, make sure you've imported the necessary item ...
 ```js
-import { State } from '@thundersolutions/state'
 
-// or get the same object by importing the default export
-import MyStateName from '@thundersolutions/state'
+// get the class or factory function as named exports
+import { State, createState } from '@thundersolutions/state'
+
+// or get the `State` class as a default export
+import State from '@thundersolutions/state'
+
+// You can also get the `createState()` factory function from the State class
+const { createState } = State
 ```
-... or include it as a UMD.
+... Or include it as a UMD.
 ```html
 <script src="https://unpkg.com/@thundersolutions/state/umd/thunderState.min.js"></script>
 <script>
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Object_destructuring
-  const { State } = ThunderState
+  const { State, createState } = ThunderState
 </script>
 ```
 
