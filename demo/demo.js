@@ -2,6 +2,10 @@
 import State, { createState } from '../esm/thunderState.min.mjs'
 // import State from '../lib/State.js'
 
+const wait = time => new Promise(resolve => {
+  setTimeout(() => { resolve() }, time)
+})
+
 window.appState = new State({
 
   name: 'Demo',
@@ -20,18 +24,16 @@ window.appState = new State({
   
   // define the actions that can be called by appState.dispatch('actionName', payload)
   actions: {
-    switchAccount({state, payload}, done) {
-      setTimeout(() => {
-        state.account.settings.email = payload
-        done()
-      }, 1000)
+    async switchAccount({state, payload}) {
+      await wait(1000)
+      state.account.settings.email = payload
     },
     switchUser({state, payload}) {
       state.account.user.username = payload
     }
   },
 
-  enableDevTools: false,
+  // enableDevTools: false,
 })
 
 // DOM queries and watchers to reflect in UI
@@ -93,7 +95,8 @@ window.otherState = createState({
       state.someOtherVal = payload
     },
   },
-  enableDevTools: false,
+
+  // enableDevTools: false,
 })
 
 otherState.watchers.thisIsATest(newVal => {
