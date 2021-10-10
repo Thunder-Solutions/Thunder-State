@@ -30,6 +30,8 @@ window.appState = new State({
       state.account.user.username = payload
     }
   },
+
+  enableDevTools: false,
 })
 
 // DOM queries and watchers to reflect in UI
@@ -38,19 +40,19 @@ const emailEl = document.querySelector('.email-js')
 usernameEl.textContent = appState.getters.account.user.username
 emailEl.textContent = appState.getters.account.settings.email
 
-// appState.watchers.account.user.username(newValue => usernameEl.textContent = newValue)
-// appState.watchers.account.user.username((newValue, destroy) => {
-//   console.log('watcher1', newValue)
-//   destroy()
-// })
-// appState.watchers.account.user.username(newValue => console.log('watcher2', newValue))
-// appState.watchers.account.settings.email(newValue => emailEl.textContent = newValue)
+appState.watchers.account.user.username(newValue => usernameEl.textContent = newValue)
+appState.watchers.account.user.username((newValue, destroy) => {
+  console.log('watcher1', newValue)
+  destroy()
+})
+appState.watchers.account.user.username(newValue => console.log('watcher2', newValue))
+appState.watchers.account.settings.email(newValue => emailEl.textContent = newValue)
 
 
-// appState.dispatchers.switchUser('example_user_two')
-// appState.dispatchers.switchAccount('fake_two@email.com')
-// appState.dispatchers.switchUser('example_user_three')
-// appState.dispatchers.switchAccount('fake_three@email.com')
+appState.dispatchers.switchUser('example_user_two')
+appState.dispatchers.switchAccount('fake_two@email.com')
+appState.dispatchers.switchUser('example_user_three')
+appState.dispatchers.switchAccount('fake_three@email.com')
 
 window.otherState = createState({
 
@@ -91,14 +93,15 @@ window.otherState = createState({
       state.someOtherVal = payload
     },
   },
+  enableDevTools: false,
 })
 
-// otherState.watchers.thisIsATest(newVal => {
-//   console.log('array changed:', newVal)
-// })
+otherState.watchers.thisIsATest(newVal => {
+  console.log('array changed:', newVal)
+})
 
-// otherState.dispatchers.changeColor('blue')
+otherState.dispatchers.changeColor('blue')
 otherState.dispatchers.changeValueInList([1, 'a different another value'])
 otherState.dispatchers.removeValue([1, 1])
 otherState.dispatchers.addValue('oh look, another!')
-// otherState.dispatchers.changeValue(false)
+otherState.dispatchers.changeValue(false)
