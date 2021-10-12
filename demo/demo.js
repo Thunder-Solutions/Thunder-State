@@ -101,11 +101,10 @@ window.otherState = createState({
   },
 
   computed: {
-    computedTestArr({anotherTest}) {
-      return anotherTest.map(({name}) => name)
+    computedTestArr({thisIsATest}) {
+      return thisIsATest.map(v => `>${v}`)
     },
     computedTestName({computedTestArr}) {
-      if (!computedTestArr) return
       return computedTestArr.join(' ')
     },
   },
@@ -113,7 +112,9 @@ window.otherState = createState({
   // enableDevTools: false,
 })
 
-console.log('computed test', otherState.getters.computedTestName)
+otherState.watchers.computedTestName(newVal => {
+  console.log('computed test:', newVal)
+})
 
 otherState.watchers.thisIsATest(newVal => {
   console.log('array changed:', newVal)
