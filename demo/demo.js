@@ -63,10 +63,7 @@ window.otherState = createState({
   state: {
     color: 'red',
     someOtherVal: null,
-    thisIsATest: [
-      'hello world',
-      'another value',
-    ],
+    thisIsATest: [],
     anotherTest: [
       { name: 'one', value: 1 },
       { name: 'two', value: 2 },
@@ -87,6 +84,13 @@ window.otherState = createState({
       state.thisIsATest.splice(index, count)
     },
 
+    populateList({state}) {
+      state.thisIsATest = [
+        'hello world',
+        'another value',
+      ]
+    },
+
     changeValueInList({state, payload: [index, value]}) {
       state.thisIsATest[index] = value
     },
@@ -103,8 +107,10 @@ otherState.watchers.thisIsATest(newVal => {
   console.log('array changed:', newVal)
 })
 
-otherState.dispatchers.changeColor('blue')
-otherState.dispatchers.changeValueInList([1, 'a different another value'])
-otherState.dispatchers.removeValue([1, 1])
-otherState.dispatchers.addValue('oh look, another!')
-otherState.dispatchers.changeValue(false)
+otherState.dispatchers.populateList()
+
+// otherState.dispatchers.changeColor('blue')
+// otherState.dispatchers.changeValueInList([1, 'a different another value'])
+// otherState.dispatchers.removeValue([1, 1])
+// otherState.dispatchers.addValue('oh look, another!')
+// otherState.dispatchers.changeValue(false)
