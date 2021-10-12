@@ -109,8 +109,8 @@ otherState.watchers.thisIsATest(newVal => {
 
 otherState.dispatchers.populateList()
 
-// otherState.dispatchers.changeColor('blue')
-// otherState.dispatchers.changeValueInList([1, 'a different another value'])
-// otherState.dispatchers.removeValue([1, 1])
-// otherState.dispatchers.addValue('oh look, another!')
-// otherState.dispatchers.changeValue(false)
+otherState.dispatchers.changeColor('blue')
+otherState.dispatchers.changeValueInList([1, 'a different another value'])
+otherState.dispatchers.removeValue([1, 1])
+otherState.dispatchers.addValue('oh look, another!')
+otherState.dispatchers.changeValue(false)
