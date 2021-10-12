@@ -100,8 +100,20 @@ window.otherState = createState({
     },
   },
 
+  computed: {
+    computedTestArr({anotherTest}) {
+      return anotherTest.map(({name}) => name)
+    },
+    computedTestName({computedTestArr}) {
+      if (!computedTestArr) return
+      return computedTestArr.join(' ')
+    },
+  },
+
   // enableDevTools: false,
 })
+
+console.log('computed test', otherState.getters.computedTestName)
 
 otherState.watchers.thisIsATest(newVal => {
   console.log('array changed:', newVal)
