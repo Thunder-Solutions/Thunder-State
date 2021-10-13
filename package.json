@@ -1,6 +1,6 @@
 {
   "name": "@thundersolutions/state",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Complex state management made easy.",
   "main": "dist/thunderState.min.js",
   "module": "esm/thunderstate.min.mjs",
