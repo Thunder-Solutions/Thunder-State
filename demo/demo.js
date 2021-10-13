@@ -2,35 +2,6 @@
 import State, { createState } from '../esm/thunderState.min.mjs'
 // import State from '../lib/State.js'
 
-window.uiState = new State({
-
-  name: 'uiState',
-
-  state: {
-    darkMode: null,
-    darkAsString: 'null',
-  },
-
-  actions: {
-
-    async fetchDarkMode({ state }) {
-      const getDarkModePreference = async () => {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches
-      }
-      const darkMode = await getDarkModePreference()
-      state.darkMode = darkMode
-      state.darkAsString = String(darkMode)
-    },
-
-  },
-
-})
-
-console.log(uiState.getters.darkAsString)
-uiState.dispatchers.fetchDarkMode().then(() => {
-  console.log(uiState.getters.darkAsString)
-})
-
 const wait = time => new Promise(resolve => {
   setTimeout(() => { resolve() }, time)
 })
@@ -65,94 +36,100 @@ window.appState = new State({
   // enableDevTools: false,
 })
 
-// // DOM queries and watchers to reflect in UI
+// make sure getters are updating properly
+console.log('username BEFORE action:', appState.getters.account.user.username)
+appState.dispatchers.switchAccount('example_user_two').then(() => {
+  console.log('username AFTER action:', appState.getters.account.user.username)
+})
+
+// DOM queries and watchers to reflect in UI
 const usernameEl = document.querySelector('.username-js')
 const emailEl = document.querySelector('.email-js')
 usernameEl.textContent = appState.getters.account.user.username
 emailEl.textContent = appState.getters.account.settings.email
 
 appState.watchers.account.user.username(newValue => usernameEl.textContent = newValue)
-// // appState.watchers.account.user.username((newValue, destroy) => {
-// //   console.log('watcher1', newValue)
-// //   destroy()
-// // })
-// // appState.watchers.account.user.username(newValue => console.log('watcher2', newValue))
+appState.watchers.account.user.username((newValue, destroy) => {
+  console.log('watcher1', newValue)
+  destroy()
+})
+appState.watchers.account.user.username(newValue => console.log('watcher2', newValue))
 appState.watchers.account.settings.email(newValue => emailEl.textContent = newValue)
 
 
-// // appState.dispatchers.switchUser('example_user_two')
+appState.dispatchers.switchUser('example_user_two')
 appState.dispatchers.switchAccount('fake_two@email.com')
-// // appState.dispatchers.switchUser('example_user_three')
-// // appState.dispatchers.switchAccount('fake_three@email.com')
+appState.dispatchers.switchUser('example_user_three')
+appState.dispatchers.switchAccount('fake_three@email.com')
 
-// // window.otherState = createState({
+window.otherState = createState({
 
-// //   name: 'Test',
+  name: 'Test',
 
-// //   state: {
-// //     color: 'red',
-// //     someOtherVal: null,
-// //     thisIsATest: [],
-// //     anotherTest: [
-// //       { name: 'one', value: 1 },
-// //       { name: 'two', value: 2 },
-// //       { name: 'three', value: 3 },
-// //     ],
-// //   },
+  state: {
+    color: 'red',
+    someOtherVal: null,
+    thisIsATest: [],
+    anotherTest: [
+      { name: 'one', value: 1 },
+      { name: 'two', value: 2 },
+      { name: 'three', value: 3 },
+    ],
+  },
   
-// //   actions: {
-// //     changeColor({state, payload}) {
-// //       state.color = payload
-// //     },
+  actions: {
+    changeColor({state, payload}) {
+      state.color = payload
+    },
 
-// //     addValue({state, payload}) {
-// //       state.thisIsATest.push(payload)
-// //     },
+    addValue({state, payload}) {
+      state.thisIsATest.push(payload)
+    },
 
-// //     removeValue({state, payload: [index, count]}) {
-// //       state.thisIsATest.splice(index, count)
-// //     },
+    removeValue({state, payload: [index, count]}) {
+      state.thisIsATest.splice(index, count)
+    },
 
-// //     populateList({state}) {
-// //       state.thisIsATest = [
-// //         'hello world',
-// //         'another value',
-// //       ]
-// //     },
+    populateList({state}) {
+      state.thisIsATest = [
+        'hello world',
+        'another value',
+      ]
+    },
 
-// //     changeValueInList({state, payload: [index, value]}) {
-// //       state.thisIsATest[index] = value
-// //     },
+    changeValueInList({state, payload: [index, value]}) {
+      state.thisIsATest[index] = value
+    },
 
-// //     changeValue({state, payload}) {
-// //       state.someOtherVal = payload
-// //     },
-// //   },
+    changeValue({state, payload}) {
+      state.someOtherVal = payload
+    },
+  },
 
-// //   computed: {
-// //     computedTestArr({thisIsATest}) {
-// //       return thisIsATest.map(v => `>${v}`)
-// //     },
-// //     computedTestName({computedTestArr}) {
-// //       return computedTestArr.join(' ')
-// //     },
-// //   },
+  computed: {
+    computedTestArr({thisIsATest}) {
+      return thisIsATest.map(v => `>${v}`)
+    },
+    computedTestName({computedTestArr}) {
+      return computedTestArr.join(' ')
+    },
+  },
 
-// //   // enableDevTools: false,
-// // })
+  // enableDevTools: false,
+})
 
-// // otherState.watchers.computedTestName(newVal => {
-// //   console.log('computed test:', newVal)
-// // })
+otherState.watchers.computedTestName(newVal => {
+  console.log('computed test:', newVal)
+})
 
-// // otherState.watchers.thisIsATest(newVal => {
-// //   console.log('array changed:', newVal)
-// // })
+otherState.watchers.thisIsATest(newVal => {
+  console.log('array changed:', newVal)
+})
 
-// // otherState.dispatchers.populateList()
+otherState.dispatchers.populateList()
 
-// // otherState.dispatchers.changeColor('blue')
-// // otherState.dispatchers.changeValueInList([1, 'a different another value'])
-// // otherState.dispatchers.removeValue([1, 1])
-// // otherState.dispatchers.addValue('oh look, another!')
-// // otherState.dispatchers.changeValue(false)
+otherState.dispatchers.changeColor('blue')
+otherState.dispatchers.changeValueInList([1, 'a different another value'])
+otherState.dispatchers.removeValue([1, 1])
+otherState.dispatchers.addValue('oh look, another!')
+otherState.dispatchers.changeValue(false)
