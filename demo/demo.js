@@ -12,6 +12,9 @@ window.appState = new State({
 
   // set up the structure and set the initial state
   state: {
+    string: 'null',
+    boolean: false,
+    stringPay: 'null',
     account: {
       user: {
         username: 'example_user_one'
@@ -24,6 +27,18 @@ window.appState = new State({
   
   // define the actions that can be called by appState.dispatch('actionName', payload)
   actions: {
+    async switchStr({state}) {
+      await wait(1000)
+      state.string = 'hello, world'
+    },
+    async switchStrPay({state, payload}) {
+      await wait(1000)
+      state.stringPay = payload
+    },
+    async switchBool({state}) {
+      await wait(1000)
+      state.boolean = true
+    },
     async switchAccount({state, payload}) {
       await wait(1000)
       state.account.settings.email = payload
@@ -37,8 +52,20 @@ window.appState = new State({
 })
 
 // make sure getters are updating properly
+console.log('boolean BEFORE action:', appState.getters.boolean)
+console.log('string BEFORE action:', appState.getters.string)
+console.log('stringPay BEFORE action:', appState.getters.stringPay)
 console.log('username BEFORE action:', appState.getters.account.user.username)
-appState.dispatchers.switchAccount('example_user_two').then(() => {
+appState.dispatchers.switchBool().then(() => {
+  console.log('boolean AFTER action:', appState.getters.boolean)
+})
+appState.dispatchers.switchStr().then(() => {
+  console.log('string AFTER action:', appState.getters.string)
+})
+appState.dispatchers.switchStrPay('new string').then(() => {
+  console.log('stringPay AFTER action:', appState.getters.stringPay)
+})
+appState.dispatchers.switchUser('example_user_two').then(() => {
   console.log('username AFTER action:', appState.getters.account.user.username)
 })
 
