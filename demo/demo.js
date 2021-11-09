@@ -109,8 +109,17 @@ window.otherState = createState({
       state.color = payload
     },
 
-    addValue({state, payload}) {
-      state.thisIsATest.push(payload)
+    addValue({state, getters, dispatchers, payload}) {
+      console.log('adding value')
+      state.thisIsATest.push({
+        color: getters.color,
+        value: payload.value,
+      })
+      if (payload.color) {
+        console.log('changing color')
+        console.log(dispatchers)
+        dispatchers.changeColor(payload.color)
+      }
     },
 
     removeValue({state, payload: [index, count]}) {
@@ -119,8 +128,8 @@ window.otherState = createState({
 
     populateList({state}) {
       state.thisIsATest = [
-        'hello world',
-        'another value',
+        { value: 'hello world' },
+        { value: 'another value' },
       ]
     },
 
@@ -129,13 +138,14 @@ window.otherState = createState({
     },
 
     changeValue({state, payload}) {
+      console.log('changing value')
       state.someOtherVal = payload
     },
   },
 
   computed: {
     computedTestArr({thisIsATest}) {
-      return thisIsATest.map(v => `>${v}`)
+      return thisIsATest.map(({ value })=> `>${value}`)
     },
     computedTestName({computedTestArr}) {
       return computedTestArr.join(' ')
@@ -156,7 +166,9 @@ otherState.watchers.thisIsATest(newVal => {
 otherState.dispatchers.populateList()
 
 otherState.dispatchers.changeColor('blue')
-otherState.dispatchers.changeValueInList([1, 'a different another value'])
+otherState.dispatchers.changeValueInList([1, { value: 'a different another value' }])
 otherState.dispatchers.removeValue([1, 1])
-otherState.dispatchers.addValue('oh look, another!')
-otherState.dispatchers.changeValue(false)
+;(async () => {
+  await otherState.dispatchers.addValue({ color: 'black', value: 'oh look, another!' })
+  otherState.dispatchers.changeValue(false)
+})()
