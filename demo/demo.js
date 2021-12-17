@@ -180,12 +180,13 @@ otherState.dispatchers.removeValue([1, 1])
   otherState.dispatchers.changeValue(false)
 })()
 
-const testWatcher = newColor => { console.log('test watcher:', newColor) }
-
-otherState.watchers.color(testWatcher)
-otherState.dispatchers.changeColor('green')
-otherState.watchers.color.destroy(testWatcher)
-setTimeout(() => otherState.dispatchers.changeColor('purple'))
+;(async () => {
+  const testWatcher = newColor => { console.error('test watcher:', newColor) }
+  otherState.watchers.color(testWatcher)
+  otherState.dispatchers.changeColor('green')
+  await otherState.watchers.color.destroy(testWatcher)
+  otherState.dispatchers.changeColor('purple')
+})()
 
 
 otherState.watchers.watchThis(() => {
