@@ -52,42 +52,42 @@ window.appState = new State({
 })
 
 // make sure getters are updating properly
-// console.log('boolean BEFORE action:', appState.getters.boolean)
-// console.log('string BEFORE action:', appState.getters.string)
-// console.log('stringPay BEFORE action:', appState.getters.stringPay)
-// console.log('username BEFORE action:', appState.getters.account.user.username)
-// appState.dispatchers.switchBool().then(() => {
-//   console.log('boolean AFTER action:', appState.getters.boolean)
-// })
-// appState.dispatchers.switchStr().then(() => {
-//   console.log('string AFTER action:', appState.getters.string)
-// })
-// appState.dispatchers.switchStrPay('new string').then(() => {
-//   console.log('stringPay AFTER action:', appState.getters.stringPay)
-// })
-// appState.dispatchers.switchUser('example_user_two').then(() => {
-//   console.log('username AFTER action:', appState.getters.account.user.username)
-// })
+console.log('boolean BEFORE action:', appState.getters.boolean)
+console.log('string BEFORE action:', appState.getters.string)
+console.log('stringPay BEFORE action:', appState.getters.stringPay)
+console.log('username BEFORE action:', appState.getters.account.user.username)
+appState.dispatchers.switchBool().then(() => {
+  console.log('boolean AFTER action:', appState.getters.boolean)
+})
+appState.dispatchers.switchStr().then(() => {
+  console.log('string AFTER action:', appState.getters.string)
+})
+appState.dispatchers.switchStrPay('new string').then(() => {
+  console.log('stringPay AFTER action:', appState.getters.stringPay)
+})
+appState.dispatchers.switchUser('example_user_two').then(() => {
+  console.log('username AFTER action:', appState.getters.account.user.username)
+})
 
-// // DOM queries and watchers to reflect in UI
-// const usernameEl = document.querySelector('.username-js')
-// const emailEl = document.querySelector('.email-js')
-// usernameEl.textContent = appState.getters.account.user.username
-// emailEl.textContent = appState.getters.account.settings.email
+// DOM queries and watchers to reflect in UI
+const usernameEl = document.querySelector('.username-js')
+const emailEl = document.querySelector('.email-js')
+usernameEl.textContent = appState.getters.account.user.username
+emailEl.textContent = appState.getters.account.settings.email
 
-// appState.watchers.account.user.username(newValue => usernameEl.textContent = newValue)
-// appState.watchers.account.user.username((newValue, destroy) => {
-//   console.log('watcher1', newValue)
-//   destroy()
-// })
-// appState.watchers.account.user.username(newValue => console.log('watcher2', newValue))
-// appState.watchers.account.settings.email(newValue => emailEl.textContent = newValue)
+appState.watchers.account.user.username(newValue => usernameEl.textContent = newValue)
+appState.watchers.account.user.username((newValue, destroy) => {
+  console.log('watcher1', newValue)
+  destroy()
+})
+appState.watchers.account.user.username(newValue => console.log('watcher2', newValue))
+appState.watchers.account.settings.email(newValue => emailEl.textContent = newValue)
 
 
-// appState.dispatchers.switchUser('example_user_two')
-// appState.dispatchers.switchAccount('fake_two@email.com')
-// appState.dispatchers.switchUser('example_user_three')
-// appState.dispatchers.switchAccount('fake_three@email.com')
+appState.dispatchers.switchUser('example_user_two')
+appState.dispatchers.switchAccount('fake_two@email.com')
+appState.dispatchers.switchUser('example_user_three')
+appState.dispatchers.switchAccount('fake_three@email.com')
 
 window.otherState = createState({
 
@@ -162,36 +162,36 @@ window.otherState = createState({
   // enableDevTools: false,
 })
 
-// otherState.watchers.computedTestName(newVal => {
-//   console.log('computed test:', newVal)
-// })
+otherState.watchers.computedTestName(newVal => {
+  console.log('computed test:', newVal)
+})
 
-// otherState.watchers.thisIsATest(newVal => {
-//   console.log('array changed:', newVal)
-// })
+otherState.watchers.thisIsATest(newVal => {
+  console.log('array changed:', newVal)
+})
 
-// otherState.dispatchers.populateList()
+otherState.dispatchers.populateList()
 
-// otherState.dispatchers.changeColor('blue')
-// otherState.dispatchers.changeValueInList([1, { value: 'a different another value' }])
-// otherState.dispatchers.removeValue([1, 1])
-// ;(async () => {
-//   await otherState.dispatchers.addValue({ color: 'black', value: 'oh look, another!' })
-//   otherState.dispatchers.changeValue(false)
-// })()
+otherState.dispatchers.changeColor('blue')
+otherState.dispatchers.changeValueInList([1, { value: 'a different another value' }])
+otherState.dispatchers.removeValue([1, 1])
+;(async () => {
+  await otherState.dispatchers.addValue({ color: 'black', value: 'oh look, another!' })
+  otherState.dispatchers.changeValue(false)
+})()
 
-// const testWatcher = newColor => { console.log(newColor) }
+const testWatcher = newColor => { console.log('test watcher:', newColor) }
 
-// otherState.watchers.color(testWatcher)
-// otherState.dispatchers.changeColor('green')
-// otherState.watchers.color.destroy(testWatcher)
-// setTimeout(() => otherState.dispatchers.changeColor('purple'))
+otherState.watchers.color(testWatcher)
+otherState.dispatchers.changeColor('green')
+otherState.watchers.color.destroy(testWatcher)
+setTimeout(() => otherState.dispatchers.changeColor('purple'))
 
 
-// otherState.watchers.watchThis(() => {
-//   console.log('watching this')
-// })
-// otherState.watchers.watchThis.variable(newVar => {
-//   console.log(newVar)
-// })
-// otherState.dispatchers.changeVariable('hello world')
+otherState.watchers.watchThis(() => {
+  console.log('watching this')
+})
+otherState.watchers.watchThis.variable(newVar => {
+  console.log(newVar)
+})
+otherState.dispatchers.changeVariable('hello world')
