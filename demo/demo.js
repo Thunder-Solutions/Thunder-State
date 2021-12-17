@@ -180,15 +180,18 @@ window.otherState = createState({
 //   otherState.dispatchers.changeValue(false)
 // })()
 
-const testWatcher = newColor => { console.log(newColor) }
+// const testWatcher = newColor => { console.log(newColor) }
 
-otherState.watchers.color(testWatcher)
-otherState.dispatchers.changeColor('green')
-otherState.watchers.color.destroy(testWatcher)
-setTimeout(() => otherState.dispatchers.changeColor('purple'))
+// otherState.watchers.color(testWatcher)
+// otherState.dispatchers.changeColor('green')
+// otherState.watchers.color.destroy(testWatcher)
+// setTimeout(() => otherState.dispatchers.changeColor('purple'))
 
 
 // otherState.watchers.watchThis(() => {
 //   console.log('watching this')
+// })
+// otherState.watchers.watchThis.variable(newVar => {
+//   console.log(newVar)
 // })
 // otherState.dispatchers.changeVariable('hello world')
