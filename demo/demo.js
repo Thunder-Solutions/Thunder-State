@@ -1,6 +1,5 @@
 // This is for testing the final build:
 import State, { createState } from '../esm/thunderState.min.mjs'
-// import State from '../lib/State.js'
 
 const wait = time => new Promise(resolve => {
   setTimeout(() => { resolve() }, time)
