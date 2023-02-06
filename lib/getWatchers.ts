@@ -1,4 +1,4 @@
-import { getValueFromPath, isObject } from "./utilities"
+import { getValueFromPath, isObject } from './utilities'
 
 /**
  * Get properties as "add watcher" methods so the end user can react to state changes

@@ -1,4 +1,5 @@
-import { getStateSetError, getWatchers, getValueFromPath } from '../utilities.js'
+import { getStateSetError, getValueFromPath } from '../utilities'
+import getWatchers from '../getWatchers'
 
 describe('Utilities', () => {
 

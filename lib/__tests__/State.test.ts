@@ -1,7 +1,7 @@
-import State from '../State.js'
-import {DeepProxy} from '../DeepProxy.js'
-import testStateConfig from '../testUtilities/testStateConfig.js'
-import {getStateSetError} from '../utilities.js'
+import State from '../State'
+import {DeepProxy} from '../DeepProxy'
+import testStateConfig from '../testUtilities/testStateConfig'
+import {getStateSetError} from '../utilities'
 
 describe('State', () => {
 

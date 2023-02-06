@@ -1,9 +1,9 @@
-import {DeepProxy, createDeepProxy} from '../DeepProxy.js'
+import {DeepProxy, createDeepProxy} from '../DeepProxy'
 
 describe('DeepProxy', () => {
 
   it('creates a proxy from an object', () => {
-    const originalObject = {test: { test: 'test'}}
+    const originalObject = { test: { test: 'test'} }
     const proxy = new DeepProxy(originalObject)
     expect(proxy).not.toBe(originalObject)
     expect(proxy.test.test).toBe('test')

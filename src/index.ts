@@ -1,4 +1,4 @@
-import State from '../lib/State.js'
+import State from '../lib/State'
 
 export default State
 const { createState } = State

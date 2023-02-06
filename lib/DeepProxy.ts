@@ -1,4 +1,4 @@
-import { getStateSetError, isObject } from './utilities.js'
+import { isObject } from './utilities'
 
 /** 
  * The syntax and behavior is basically the same as the native `Proxy`.
@@ -68,6 +68,6 @@ export class DeepProxy {
   }
 }
 
-// the only purpose this serves is to get rid of the class import inside State.js,
+// the only purpose this serves is to get rid of the class import inside State.ts,
 // because Jest evidently hates classes. A lot.
 export const createDeepProxy = (target, handler) => new DeepProxy(target, handler)
