@@ -1,4 +1,4 @@
-import { Key } from './types'
+import { Key } from '../types'
 
 export interface DeepProxyHandler<T extends object> {
   get?: (target: T, key: Key, path: Key[]) => unknown;

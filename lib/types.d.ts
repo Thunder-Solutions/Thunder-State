@@ -1,6 +1,4 @@
-import { DeepProxy } from './DeepProxy'
-import State from './State';
-
+import { DeepProxy } from './proxy/deepProxy'
 
 export type Key = string | symbol
 type KV<T> = { [key: Key]: T }
@@ -36,7 +34,7 @@ export type ActionArgs = {
 
 export type Action = (args: ActionArgs, done?: (value: void | PromiseLike<void>) => void) => Promise<void> | void
 export type Dispatcher = (payload: unknown) => Promise<void>
-export type Setters = DeepProxy<StateArg>
+export type Setters = DeepProxy<StateObj>
 
 export type PrivateProps = {
   setters: Setters;
@@ -48,16 +46,15 @@ export type PrivateProps = {
   enableDevTools: boolean;
 }
 
-export type NestedObj = {
+export type StateObj = {
 
-  // TODO: fix this `any`
-  [key: string]: any;
+  // TODO: use generic instead of `any`
+  [key: Key]: any;
 }
 
-export type Getters = DeepProxy<StateArg> & NestedObj
-export type Watchers = KV<AddWatcher> & NestedObj
+export type Getters = DeepProxy<StateObj> & StateObj
+export type Watchers = KV<AddWatcher> & StateObj
 export type Dispatchers = KV<Dispatcher>
-export type CreateState = (config: StateConfig) => State
 
 export type PublicInstance = {
   getters: Getters;
@@ -65,13 +62,12 @@ export type PublicInstance = {
   dispatchers: Dispatchers;
 }
 
-export type StateArg = KV<unknown>
 export type ComputedArg = KV<(getters?: Getters) => unknown>
 export type ActionsArg = KV<Action>
 
-export type StateConfig = {
+export type StoreConfig = {
   name: string;
-  state: StateArg;
+  state: StateObj;
   computed?: ComputedArg;
   actions?: ActionsArg;
   enableDevTools?: boolean;

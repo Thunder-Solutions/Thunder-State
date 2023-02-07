@@ -1,6 +1,6 @@
-import { DeepProxyHandler, ProxyUtility } from './DeepProxyTypes'
-import { Key } from './types'
-import { isObject } from './utilities'
+import { DeepProxyHandler, ProxyUtility } from './deepProxyTypes'
+import { Key } from '../types'
+import { isObject } from '../utilities'
 
 const DEFAULT_HANDLER = { get: () => null, set: () => false }
 

@@ -1,5 +1,3 @@
-import State from '../lib/State'
+import createStore from '../lib/createStore'
 
-export default State
-const { createState } = State
-export { State, createState }
+export { createStore }

@@ -4,10 +4,10 @@ import getSetters from './getSetters'
 import getDispatchers from './getDispatchers'
 import connectToDevTools from './connectToDevTools'
 import cloneDeep from 'lodash-es/cloneDeep'
-import { StateConfig, PrivateProps, PublicInstance, Dispatchers, Getters, Watchers, CreateState } from './types'
+import { StoreConfig, PrivateProps, PublicInstance } from './types'
 
 // The factory function for creating a new state
-const createState = (config: StateConfig) => {
+const createStore = (config: StoreConfig): PublicInstance => {
 
   // clone so the user can't modify the state from the object reference they fed in
   const {
@@ -23,7 +23,6 @@ const createState = (config: StateConfig) => {
     getters: {},
     watchers: {},
     dispatchers: {},
-    createState,
   })
 
   // establish an internal state for tracking things privately
@@ -57,20 +56,4 @@ const createState = (config: StateConfig) => {
   return publicInstance
 }
 
-// the classic constructor for legacy reasons
-class State implements PublicInstance {
-  [key: string]: unknown;
-  getters: Getters;
-  watchers: Watchers;
-  dispatchers: Dispatchers;
-  static createState: CreateState;
-  constructor(config: StateConfig) {
-    const state = createState(config)
-    for (const key in state) {
-      this[key] = state[key]
-    }
-    Object.seal(this)
-  }
-}
-
-export default State
+export default createStore

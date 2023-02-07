@@ -1,12 +1,11 @@
 import resolve from 'rollup-plugin-node-resolve'
 import babel from '@rollup/plugin-babel'
-import sourcemaps from 'rollup-plugin-sourcemaps'
 import { terser } from 'rollup-plugin-terser'
 import regenerator from 'rollup-plugin-regenerator'
 import typescript from '@rollup/plugin-typescript'
 
 export default {
-  input: 'src/index.js',
+  input: 'src/index.ts',
   output: [
     {
       file: 'esm/thunderState.min.mjs',
@@ -19,21 +18,26 @@ export default {
       format: 'umd',
       name: 'ThunderState',
       compact: true,
+      sourcemap: true,
     },
     {
       file: 'dist/thunderState.min.js',
       format: 'cjs',
       compact: true,
+      sourcemap: true,
     },
   ],
   plugins: [
-    sourcemaps(),
+    typescript({
+      sourceMap: true,
+      inlineSources: true,
+      declarationDir: 'types',
+    }),
     resolve(),
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
     }),
     terser(),
     regenerator(),
-    typescript(),
   ],
 }

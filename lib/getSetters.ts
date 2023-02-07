@@ -1,14 +1,14 @@
 import cloneDeep from 'lodash-es/cloneDeep'
-import { createDeepProxy } from './DeepProxy'
+import { createDeepProxy } from './proxy/deepProxy'
 import getGetters from './getGetters'
 import getRunWatchers from './getRunWatchers'
-import { ComputedArg, Key, PrivateProps, PublicInstance, Setters, StateArg } from './types'
+import { ComputedArg, Key, PrivateProps, PublicInstance, Setters, StateObj } from './types'
 import { patchArray, withoutLast } from './utilities'
 
 /**
  * Get state as setters so we can intercept the mutations as they occur.
  */
-export default (name: string, protectedState: StateArg, computed: ComputedArg, publicInstance: PublicInstance, privateProps: PrivateProps): Setters => {
+export default (name: string, protectedState: StateObj, computed: ComputedArg, publicInstance: PublicInstance, privateProps: PrivateProps): Setters => {
   const { enableDevTools } = privateProps
 
   // a reusable function to add a mutation to the action entry in the history
