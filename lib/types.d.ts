@@ -70,9 +70,9 @@ export type ComputedArg = KV<(getters?: Getters) => unknown>
 export type ActionsArg = KV<Action>
 
 export type StateConfig = {
+  name: string;
   state: StateArg;
   computed?: ComputedArg;
   actions?: ActionsArg;
-  name?: string;
   enableDevTools?: boolean;
 }
