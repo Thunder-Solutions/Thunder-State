@@ -23,30 +23,26 @@ npm i @thundersolutions/state
 ## Usage
 
 First, make sure you've imported the necessary item ...
+
 ```js
-
-// get the class or factory function as named exports
-import { State, createState } from '@thundersolutions/state'
-
-// or get the `State` class as a default export
-import State from '@thundersolutions/state'
-
-// You can also get the `createState()` factory function from the State class
-const { createState } = State
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Object_destructuring
+// import the function from the package
+import { createStore } from '@thundersolutions/state'
 ```
+
 ... Or include it as a UMD.
+
 ```html
 <script src="https://unpkg.com/@thundersolutions/state/umd/thunderState.min.js"></script>
 <script>
-  const { State, createState } = ThunderState
+  const { createStore } = ThunderState
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Object_destructuring
 </script>
 ```
 
 Then create your state by adding some basic configuration options.
+
 ```js
-const state = new State({
+const state = createStore({
 
   state: {
     user: {
@@ -80,18 +76,21 @@ const state = new State({
 ```
 
 Retrieve the state from getters, which are automatically created from your initial state.
+
 ```js
 console.log(state.getters.loggedIn) // true
 console.log(state.getters.user.username) // 'demo_user'
 ```
 
 Change the state by dispatching the actions defined above.
+
 ```js
 state.dispatchers.changeUsername('new_user')
 state.dispatchers.toggleAlert(false)
 ```
 
 That's all you need for your first simple state!  Additionally, there are more options to make your state even more powerful, such as:
+
  * computed values
  * watchers
  * asynchronous actions
@@ -105,4 +104,4 @@ Read more about these features in the [documentation](https://github.com/thunder
 
 ## License
 
-MIT © 2020 Jonathan DeWitt
+MIT © 2023 Thunder Solutions LLC
