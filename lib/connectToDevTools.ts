@@ -1,14 +1,11 @@
 import { isObject, getPojo } from './utilities'
 import timeTravel from './timeTravel'
+import { PrivateProps, PublicInstance } from './types'
 
 /**
  * Prepares the "Thunder State Dev Tools" browser extension.
- * @param {string} name - The name of the state instance
- * @param {object} publicInstance - A reference to the full constructed instance from `new State()`
- * @param {object} publicInstance.getters - The immutable getters; attempting to set throws an error
- * @param {object} privateProps - The internal state used to track various things privately
  */
-export default (name, { getters }, privateProps) => {
+export default (name: string, { getters }: PublicInstance, privateProps: PrivateProps) => {
 
   // if not using browser, can't connect to dev tools; skip
   if (typeof window === 'undefined') return

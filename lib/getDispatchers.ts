@@ -1,22 +1,17 @@
+import { ActionsArg, Dispatchers, PrivateProps, PublicInstance } from './types'
+
 /**
  * Get dispatchers for each user-defined action
- * @param {string} name - The name of the state instance
- * @param {object} actions - The action methods from the original `new State()` config object
- * @param {object} privateProps - The internal state used to track various things privately
- * @param {object} privateProps.setters - A non-extensible object used to set values on the state
- * @param {Array<Promise>} queue - The backlog of async actions
- * @param {Array<object>} actionHistory - A list of previously dispatched actions
- * @returns {object} - All dispatchers corresponding with each user-defined action
  */
-export default (name, actions, publicInstance, { setters, queue, actionHistory, enableDevTools }) => {
+export default (name: string, actions: ActionsArg, publicInstance: PublicInstance, { setters, queue, actionHistory, enableDevTools }: PrivateProps): Dispatchers => {
   return Object.keys(actions).reduce((dispatchers, key) => {
 
     // define the dispatcher method corresponding to the action
-    dispatchers[key] = async payload => {
+    dispatchers[key] = async (payload: unknown) => {
       const action = actions[key]
 
       // append this action as a promise to the queue
-      let done
+      let done: (value: void | PromiseLike<void>) => void = () => {}
       queue.push(new Promise(resolve => done = resolve))
       if (queue.length > 100) queue.shift()
 

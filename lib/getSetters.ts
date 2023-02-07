@@ -2,34 +2,29 @@ import cloneDeep from 'lodash-es/cloneDeep'
 import { createDeepProxy } from './DeepProxy'
 import getGetters from './getGetters'
 import getRunWatchers from './getRunWatchers'
+import { ComputedArg, Key, PrivateProps, PublicInstance, Setters, StateArg } from './types'
 import { patchArray, withoutLast } from './utilities'
 
 /**
  * Get state as setters so we can intercept the mutations as they occur.
- * @param {string} name - The name of the state instance
- * @param {object} protectedState - The mutable state from the original `new State()` config object
- * @param {object} computed - The dynamic values from the original `new State()` config object
- * @param {object} publicInstance - A reference to the full constructed instance from `new State()`
- * @param {object} privateProps - The internal state used to track various things privately
- * @returns {object} - A non-extensible object used to set values on the state
  */
-export default (name, protectedState, computed, publicInstance, privateProps) => {
+export default (name: string, protectedState: StateArg, computed: ComputedArg, publicInstance: PublicInstance, privateProps: PrivateProps): Setters => {
   const { enableDevTools } = privateProps
 
   // a reusable function to add a mutation to the action entry in the history
-  const recordHistory = (oldValue, newValue, path, { recordMutations, actionHistory }) => {
+  const recordHistory = (oldValue: unknown, newValue: unknown, path: Key[], { recordMutations, actionHistory }: PrivateProps) => {
     if (!recordMutations || !enableDevTools) return
     actionHistory[0].mutations.push({
       oldValue: cloneDeep(oldValue),
       newValue: cloneDeep(newValue),
-      path
+      path,
     })
   }
 
   // track mutations within the current event loop to prevent
   // single mutations from triggering more than once.
   const mutated = new Map()
-  const mutate = (target, newValue, mutateCallback) => {
+  const mutate = (target: object, newValue: unknown, mutateCallback: (mutated?: unknown) => void) => {
 
     // if this isn't an array, run the mutation without extras
     if (!Array.isArray(target)) {
@@ -69,7 +64,7 @@ export default (name, protectedState, computed, publicInstance, privateProps) =>
 
         // monkey-patch array methods to intercept mutations
         const arr = valueIsArray ? target[key] : target
-        const patchedArray = patchArray(arr, enableDevTools, mutate, (oldArray, newArray) => {
+        const patchedArray = patchArray(arr, enableDevTools, mutate, (oldArray: unknown[], newArray: unknown[]) => {
           const watcherPath = withoutLast(path)
           recordHistory(oldArray, newArray, watcherPath, privateProps)
           runWatchers(arr, watcherPath, newArray)

@@ -1,16 +1,10 @@
+import { ComputedArg, Key, PrivateProps, PublicInstance, Watcher } from './types'
 import { getValueFromPath, trimUndef } from './utilities'
 
 /**
  * Prepares the runWatchers function with prerequisite data and a closure
- * @param {string} name - The name of the state instance
- * @param {object} computed - The dynamic values from the original `new State()` config object
- * @param {object} publicInstance - A reference to the full constructed instance from `new State()`
- * @param {object} privateProps - The state used to track various things privately
- * @param {Map} privateProps.userDefinedWatchers - Map to track watchers with "add watcher" methods used as keys
- * @param {boolean} privateProps.enableDevTools - Flag for whether to enable time travel with the browser extension
- * @returns {function} - the runWatchers function
  */
-export default (name, computed, publicInstance, { userDefinedWatchers, enableDevTools }) => {
+export default (name: string, computed: ComputedArg, publicInstance: PublicInstance, { userDefinedWatchers, enableDevTools }: PrivateProps) => {
 
   // store previous values from computed properties
   const { getters } = publicInstance
@@ -22,9 +16,6 @@ export default (name, computed, publicInstance, { userDefinedWatchers, enableDev
 
   /**
    * The runWatchers function triggers user-defined watcher methods for the given property
-   * @param {object|Array} target - The parent object of the property being changed
-   * @param {Array<string>} path - The object key path of the property being changed
-   * @param {*} _newValue - The new value being assigned to the given property
    */
   return (target, path, _newValue) => {
     const { getters, watchers } = publicInstance
@@ -40,14 +31,14 @@ export default (name, computed, publicInstance, { userDefinedWatchers, enableDev
 
       // build the current full path of this iteration
       const idx = Number(idxStr)
-      const _path = []
+      const _path: Key[] = []
       for (let i = 0; i <= idx; i++) {
         _path.push(path[i])
       }
 
       // call the watchers at the current path
       const addWatcher = getValueFromPath(watchers, _path)
-      const _watchers = userDefinedWatchers.get(addWatcher)
+      const _watchers: Set<Watcher> = userDefinedWatchers.get(addWatcher) ?? new Set()
       _watchers.forEach(watcher =>
         watcher(watcherValue, () => { addWatcher.destroy(watcher) }))
     }
@@ -57,9 +48,9 @@ export default (name, computed, publicInstance, { userDefinedWatchers, enableDev
       const cValue = getters[cKey]
       const _cValue = Array.isArray(cValue) ? JSON.stringify(cValue) : cValue
       if (prevComputed[cKey] === _cValue) continue
-      const cWatchers = userDefinedWatchers.get(watchers[cKey])
+      const cWatchers = userDefinedWatchers.get(watchers[cKey]) ?? new Set()
       cWatchers.forEach(watcher =>
-        watcher(cValue, () => destroyWatcher(cWatchers, watcher)))
+        watcher(cValue, destroyWatcher => destroyWatcher(watcher)))
 
       // tell the browser extension about the new computed value
       if (!enableDevTools || typeof window === 'undefined') continue

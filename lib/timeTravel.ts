@@ -1,12 +1,11 @@
 import cloneDeep from 'lodash-es/cloneDeep'
+import { PrivateProps } from './types'
 import { getValueFromPath } from './utilities'
 
 /**
  * The "time travel" function used to rewind and fast-forward actions
- * @param {number} num - The number of actions to move (negative for rewinding)
- * @param {object} privateProps - The state used to track various things privately
  */
-export default (num, privateProps) => {
+export default (num: number, privateProps: PrivateProps) => {
   const { setters, actionHistory, actionFuture } = privateProps
 
   // rewind if num is negative
