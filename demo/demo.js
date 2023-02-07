@@ -1,11 +1,11 @@
 // This is for testing the final build:
-import State, { createState } from '../esm/thunderState.min.mjs'
+import { createStore } from '../esm/thunderState.min.mjs'
 
 const wait = time => new Promise(resolve => {
   setTimeout(() => { resolve() }, time)
 })
 
-window.appState = new State({
+window.appState = createStore({
 
   name: 'Demo',
 
@@ -88,7 +88,7 @@ appState.dispatchers.switchAccount('fake_two@email.com')
 appState.dispatchers.switchUser('example_user_three')
 appState.dispatchers.switchAccount('fake_three@email.com')
 
-window.otherState = createState({
+window.otherState = createStore({
 
   name: 'Test',
 
@@ -180,7 +180,7 @@ otherState.dispatchers.removeValue([1, 1])
 })()
 
 ;(async () => {
-  const testWatcher = newColor => { console.error('test watcher:', newColor) }
+  const testWatcher = newColor => { console.warn('test watcher:', newColor) }
   otherState.watchers.color(testWatcher)
   otherState.dispatchers.changeColor('green')
   await otherState.watchers.color.destroy(testWatcher)
