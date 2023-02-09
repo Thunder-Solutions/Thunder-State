@@ -72,3 +72,7 @@ export type StoreConfig = {
   actions?: ActionsArg;
   enableDevTools?: boolean;
 }
+
+export type MutationFn = (arr1: unknown[], arr2: unknown[], callback: (previouslyMutated: boolean) => void) => void
+
+export type MutationCb = (arr1: unknown[], arr2: unknown[]) => void

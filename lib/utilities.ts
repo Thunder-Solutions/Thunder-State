@@ -1,25 +1,20 @@
 import { isEqual, cloneDeep } from 'lodash-es'
+import { Key, MutationCb, MutationFn } from './types'
 
 /**
  * Checks whether the given value is an object
- * @param {*} val - The value to test
- * @returns {boolean} - True if the value is an object
  */
-export const isObject = val => !!val && val.toString() === '[object Object]'
+export const isObject = (val: unknown): boolean => !!val && val.toString() === '[object Object]'
 
 /**
  * Returns a clone of the given array without the last item
- * @param {Array} arr - The reference array
- * @returns {Array} - A copy of the array without the last item
  */
-export const withoutLast = arr => arr.slice(0, arr.length - 1)
+export const withoutLast = (arr: unknown[]): unknown[] => arr.slice(0, -1)
 
 /**
  * Trims undefined values from the beginning and end of an array
- * @param {Array} _arr - The reference array
- * @returns {Array} - A trimmed copy of the array
  */
-export const trimUndef = _arr => {
+export const trimUndef = (_arr: unknown[]): unknown[] => {
   const arr = [..._arr]
 
   // backward
@@ -39,7 +34,6 @@ export const trimUndef = _arr => {
 
 /**
  * Gets the specific error to be thrown when the state is set directly
- * @returns {Error} - The error to be thrown when the state is set directly
  */
 export const getStateSetError = () => new Error(`
 Not allowed to set a property on the state directly.
@@ -48,10 +42,9 @@ Handle state updates by defining and dispatching actions instead.
 
 /**
  * Gets the specific error to be thrown when a computed property fails to process
- * @returns {Error} - The error to be thrown when a computed property fails to process
  */
-export const getComputedError = (key, err) => new Error(`
-Unable to process computed property "${key}"
+export const getComputedError = (key: Key, err: Error) => new Error(`
+Unable to process computed property "${String(key)}"
   - Make sure all state properties are spelled correctly.
   - If it references other computed properties, make sure they are defined before this one.
   - If both of the above are valid, see the original error below.
@@ -62,12 +55,8 @@ ${err}`)
 
 /**
  * Gets the value at the end of the given path on the given object
- * @param {object} obj - The reference object
- * @param {Array<string>} path - The list of keys to follow (from object dot-notation)
- * @param {number} idx - The index of the current key in the path
- * @returns {*} - The value at the end of the given path on the given object
  */
-export const getValueFromPath = (obj, path, idx = 0) => {
+export const getValueFromPath = (obj: object, path: string[], idx: number = 0): unknown => {
 
   // if path is empty, just return the target
   if (path.length === 0) return obj
@@ -88,10 +77,8 @@ export const getValueFromPath = (obj, path, idx = 0) => {
 
 /**
  * Returns a "POJO" (plain-old JavaScript object) from a given non-serializeable object
- * @param {object|Array} obj - The (potentially) non-serializeable object to convert
- * @returns {object} - The "POJO" converted from the given object
  */
-export const getPojo = obj => {
+export const getPojo = (obj: object): object => {
 
   // if the provided object is an array, initialize accordingly
   const initAccumulator = Array.isArray(obj) ? [] : {}
@@ -113,11 +100,8 @@ export const getPojo = obj => {
 
 /**
  * Monkey-patches an array to capture its old and new values
- * @param {Array} arr - The reference array
- * @param {function} callback - Runs when any method is called; old and new values are passed in
- * @returns {Array} - A monkey-patched copy of the given array
  */
-export const patchArray = (arr, enableDevTools, mutate, callback) => {
+export const patchArray = (arr: unknown[], enableDevTools: boolean, mutate: MutationFn, callback: MutationCb) => {
   const patchedArray = cloneDeep(arr)
 
   // iterate over each property on the original Array prototype
@@ -132,7 +116,7 @@ export const patchArray = (arr, enableDevTools, mutate, callback) => {
     if (protoKey === 'constructor') continue
 
     // assign a method based on the original prototype
-    patchedArray[protoKey] = (...args) => {
+    patchedArray[protoKey] = (...args: unknown[]) => {
       let result = null
 
       mutate(arr, arr, (previouslyMutated) => {
