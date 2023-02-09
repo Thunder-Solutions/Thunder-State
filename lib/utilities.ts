@@ -1,5 +1,37 @@
-import { isEqual, cloneDeep } from 'lodash-es'
 import { Key, MutationCb, MutationFn } from './types'
+
+/**
+ * Get equivalence of any two values; objects will compare deep structure and every property's value
+ */
+const isEqual = (val1: unknown, val2: unknown) => {
+
+  // make sure they're the same type first
+  const sameType = typeof val1 === typeof val2
+  const sameConstructor = val1.constructor.name === val2.constructor.name
+  if (!sameType || !sameConstructor) return false
+
+  // if it's an object, check nested props for equivalence
+  if (typeof val1 === 'object' && typeof val2 === 'object') {
+
+    // make sure to iterate over all the keys in both objects
+    const keys = new Set([...Object.keys(val1), ...Object.keys(val2)])
+
+    // make sure all values are the same
+    for (const key of keys) {
+      const keyInBoth = key in val1 && key in val2
+      if (!keyInBoth) return false
+      const equal = isEqual(val1[key], val2[key])
+      if (!equal) return false
+    }
+
+    // if no mismatches were found, the objects are equal
+    return true
+  } else {
+
+    // if it's NOT an object
+    return val1 === val2
+  }
+}
 
 /**
  * Checks whether the given value is an object
@@ -9,7 +41,7 @@ export const isObject = (val: unknown): boolean => !!val && val.toString() === '
 /**
  * Returns a clone of the given array without the last item
  */
-export const withoutLast = (arr: unknown[]): unknown[] => arr.slice(0, -1)
+export const withoutLast = <T>(arr: T[]): T[] => arr.slice(0, -1)
 
 /**
  * Trims undefined values from the beginning and end of an array
@@ -56,7 +88,7 @@ ${err}`)
 /**
  * Gets the value at the end of the given path on the given object
  */
-export const getValueFromPath = (obj: object, path: string[], idx: number = 0): unknown => {
+export const getValueFromPath = (obj: object, path: Key[], idx: number = 0): unknown => {
 
   // if path is empty, just return the target
   if (path.length === 0) return obj
@@ -102,7 +134,7 @@ export const getPojo = (obj: object): object => {
  * Monkey-patches an array to capture its old and new values
  */
 export const patchArray = (arr: unknown[], enableDevTools: boolean, mutate: MutationFn, callback: MutationCb) => {
-  const patchedArray = cloneDeep(arr)
+  const patchedArray = structuredClone(arr)
 
   // iterate over each property on the original Array prototype
   const proto = Array.prototype
@@ -123,9 +155,9 @@ export const patchArray = (arr: unknown[], enableDevTools: boolean, mutate: Muta
         if (enableDevTools || !previouslyMutated) {
 
           // capture the old and new arrays
-          const oldArray = cloneDeep(arr)
+          const oldArray = structuredClone(arr)
           result = protoVal.call(arr, ...args)
-          const newArray = cloneDeep(arr)
+          const newArray = structuredClone(arr)
 
           // only run the callback if something changed
           if (!isEqual(oldArray, newArray)) {

@@ -1,4 +1,3 @@
-import cloneDeep from 'lodash-es/cloneDeep'
 import { PrivateProps } from './types'
 import { getValueFromPath } from './utilities'
 
@@ -42,7 +41,7 @@ export default (num: number, privateProps: PrivateProps) => {
       const ref = getValueFromPath(setters, parentPath)
 
       // apply the mutation to the state
-      ref[lastKey] = isRewinding ? cloneDeep(oldValue) : cloneDeep(newValue)
+      ref[lastKey] = isRewinding ? structuredClone(oldValue) : structuredClone(newValue)
     })
 
     // move the action from one list to the other

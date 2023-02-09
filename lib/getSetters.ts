@@ -1,4 +1,3 @@
-import cloneDeep from 'lodash-es/cloneDeep'
 import { createDeepProxy } from './proxy/deepProxy'
 import getGetters from './getGetters'
 import getRunWatchers from './getRunWatchers'
@@ -15,8 +14,8 @@ export default (name: string, protectedState: StateObj, computed: ComputedArg, p
   const recordHistory = (oldValue: unknown, newValue: unknown, path: Key[], { recordMutations, actionHistory }: PrivateProps) => {
     if (!recordMutations || !enableDevTools) return
     actionHistory[0].mutations.push({
-      oldValue: cloneDeep(oldValue),
-      newValue: cloneDeep(newValue),
+      oldValue: structuredClone(oldValue),
+      newValue: structuredClone(newValue),
       path,
     })
   }
@@ -24,7 +23,7 @@ export default (name: string, protectedState: StateObj, computed: ComputedArg, p
   // track mutations within the current event loop to prevent
   // single mutations from triggering more than once.
   const mutated = new Map()
-  const mutate = (target: object, newValue: unknown, mutateCallback: (mutated?: unknown) => void) => {
+  const mutate = (target: object, newValue: unknown, mutateCallback: (mutated?: boolean) => void) => {
 
     // if this isn't an array, run the mutation without extras
     if (!Array.isArray(target)) {
