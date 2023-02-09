@@ -1,4 +1,4 @@
-import { ComputedArg, Key, PrivateProps, PublicInstance, Watcher } from './types'
+import { AddWatcher, ComputedArg, Key, PrivateProps, PublicInstance, Watcher } from './types'
 import { getValueFromPath, trimUndef } from './utilities'
 
 /**
@@ -37,7 +37,7 @@ export default (name: string, computed: ComputedArg, publicInstance: PublicInsta
       }
 
       // call the watchers at the current path
-      const addWatcher = getValueFromPath(watchers, _path)
+      const addWatcher = getValueFromPath(watchers, _path) as AddWatcher
       const _watchers: Set<Watcher> = userDefinedWatchers.get(addWatcher) ?? new Set()
       _watchers.forEach(watcher =>
         watcher(watcherValue, () => { addWatcher.destroy(watcher) }))

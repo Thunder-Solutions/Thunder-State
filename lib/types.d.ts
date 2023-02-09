@@ -16,12 +16,10 @@ export type ActionEntry = {
 }
 
 export type DestroyWatcher = (watcher: Watcher) => void
-export type Watcher = {
-  destroy: DestroyWatcher;
-  (value: unknown, callback: (destroy: DestroyWatcher) => void): void;
-}
+export type Watcher = (value: unknown, callback: (destroy: DestroyWatcher) => void) => void;
 
 export type AddWatcher = {
+  destroy?: DestroyWatcher;
   (watcher: Watcher): void;
 }
 

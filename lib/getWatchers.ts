@@ -17,7 +17,7 @@ export default ({ getters }: PublicInstance, { userDefinedWatchers }: PrivatePro
     const _watchers: Set<Watcher> = new Set()
     userDefinedWatchers.set(addWatcher, _watchers)
     watchers[key] = addWatcher
-    watchers[key].destroy = watcher => new Promise(resolve => {
+    watchers[key].destroy = (watcher: Watcher) => new Promise(resolve => {
 
       // use 0 timeout to avoid interfering with async actions
       setTimeout(() => {
