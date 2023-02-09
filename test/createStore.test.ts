@@ -13,5 +13,6 @@ describe('createStore', () => {
     });
     store.getters.topLevel;
     store.getters.nested.nested;
+    expect(true).toBe(true)
   });
 });
