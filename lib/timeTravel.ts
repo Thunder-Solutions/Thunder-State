@@ -1,5 +1,5 @@
 import { PrivateProps } from './types'
-import { getValueFromPath } from './utilities'
+import { getValueFromPath, deepClone } from './utilities'
 
 /**
  * The "time travel" function used to rewind and fast-forward actions
@@ -41,7 +41,7 @@ export default (num: number, privateProps: PrivateProps) => {
       const ref = getValueFromPath(setters, parentPath)
 
       // apply the mutation to the state
-      ref[lastKey] = isRewinding ? structuredClone(oldValue) : structuredClone(newValue)
+      ref[lastKey] = isRewinding ? deepClone(oldValue) : deepClone(newValue)
     })
 
     // move the action from one list to the other

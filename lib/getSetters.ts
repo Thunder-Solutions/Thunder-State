@@ -2,7 +2,7 @@ import { createDeepProxy } from './proxy/deepProxy'
 import getGetters from './getGetters'
 import getRunWatchers from './getRunWatchers'
 import { ComputedArg, Key, PrivateProps, PublicInstance, Setters, StateObj } from './types'
-import { patchArray, withoutLast } from './utilities'
+import { patchArray, withoutLast, deepClone } from './utilities'
 
 /**
  * Get state as setters so we can intercept the mutations as they occur.
@@ -14,8 +14,8 @@ export default (name: string, protectedState: StateObj, computed: ComputedArg, p
   const recordHistory = (oldValue: unknown, newValue: unknown, path: Key[], { recordMutations, actionHistory }: PrivateProps) => {
     if (!recordMutations || !enableDevTools) return
     actionHistory[0].mutations.push({
-      oldValue: structuredClone(oldValue),
-      newValue: structuredClone(newValue),
+      oldValue: deepClone(oldValue),
+      newValue: deepClone(newValue),
       path,
     })
   }

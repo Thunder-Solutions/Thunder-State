@@ -1,5 +1,22 @@
 import { Key, MutationCb, MutationFn } from './types'
 
+export const deepClone = <T>(value: T): T => {
+
+  // primitives are inherently cloned
+  const isPrimitive = value === null || typeof value !== 'object' && typeof value !== 'function'
+  if (isPrimitive) return value
+
+  // clone objects
+  if (typeof structuredClone !== 'undefined') return structuredClone(value)
+
+  /**
+   * This is a (non-optimized) fallback in case of old versions of Node.
+   * According to MDN, structuredClone is now supported in all modern browsers.
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/structuredClone
+   */
+  return JSON.parse(JSON.stringify(value))
+}
+
 /**
  * Get equivalence of any two values; objects will compare deep structure and every property's value
  */
@@ -134,7 +151,7 @@ export const getPojo = (obj: object): object => {
  * Monkey-patches an array to capture its old and new values
  */
 export const patchArray = (arr: unknown[], enableDevTools: boolean, mutate: MutationFn, callback: MutationCb) => {
-  const patchedArray = structuredClone(arr)
+  const patchedArray = deepClone(arr)
 
   // iterate over each property on the original Array prototype
   const proto = Array.prototype
@@ -155,9 +172,9 @@ export const patchArray = (arr: unknown[], enableDevTools: boolean, mutate: Muta
         if (enableDevTools || !previouslyMutated) {
 
           // capture the old and new arrays
-          const oldArray = structuredClone(arr)
+          const oldArray = deepClone(arr)
           result = protoVal.call(arr, ...args)
-          const newArray = structuredClone(arr)
+          const newArray = deepClone(arr)
 
           // only run the callback if something changed
           if (!isEqual(oldArray, newArray)) {

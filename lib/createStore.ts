@@ -3,6 +3,7 @@ import getGetters from './getGetters'
 import getSetters from './getSetters'
 import getDispatchers from './getDispatchers'
 import connectToDevTools from './connectToDevTools'
+import { deepClone } from './utilities'
 import { StoreConfig, PrivateProps, PublicInstance } from './types'
 
 // The factory function for creating a new state
@@ -15,7 +16,7 @@ const createStore = (config: StoreConfig): PublicInstance => {
     actions = {},
     name,
     enableDevTools = true,
-  } = structuredClone(config)
+  } = deepClone(config)
 
   // keep a reference to the returned object
   const publicInstance: PublicInstance = Object.seal({
