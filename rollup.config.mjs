@@ -1,6 +1,3 @@
-import resolve from 'rollup-plugin-node-resolve'
-import babel from '@rollup/plugin-babel'
-import regenerator from 'rollup-plugin-regenerator'
 import typescript from '@rollup/plugin-typescript'
 
 export default {
@@ -31,11 +28,7 @@ export default {
       sourceMap: true,
       inlineSources: true,
       declarationDir: 'types',
+      exclude: ['test', '**/*.test.ts', 'node_modules'],
     }),
-    resolve(),
-    babel({
-      exclude: 'node_modules/**',
-    }),
-    regenerator(),
   ],
 }
