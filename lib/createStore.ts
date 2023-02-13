@@ -13,7 +13,7 @@ const createStore = ({
   ...config
 }: StoreConfig): PublicInstance => {
 
-  // clone so the user can't modify the state from the object reference they fed in
+  // clone to create a private reference that can't be mutated from outside
   const {
     state: protectedState = {},
     name,
