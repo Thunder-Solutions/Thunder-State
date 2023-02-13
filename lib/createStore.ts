@@ -7,16 +7,22 @@ import { deepClone } from './utilities'
 import { StoreConfig, PrivateProps, PublicInstance } from './types'
 
 // The factory function for creating a new state
-const createStore = (config: StoreConfig): PublicInstance => {
+const createStore = ({
+  actions: _actions = {},
+  computed: _computed = {},
+  ...config
+}: StoreConfig): PublicInstance => {
 
   // clone so the user can't modify the state from the object reference they fed in
   const {
     state: protectedState = {},
-    computed = {},
-    actions = {},
     name,
     enableDevTools = true,
   } = deepClone(config)
+
+  // shallow clone objects with methods
+  const actions = { ..._actions }
+  const computed = { ..._computed }
 
   // keep a reference to the returned object
   const publicInstance: PublicInstance = Object.seal({

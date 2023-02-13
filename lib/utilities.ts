@@ -1,5 +1,8 @@
 import { Key, MutationCb, MutationFn } from './types'
 
+/**
+ * Clones an object and all its subproperties
+ */
 export const deepClone = <T>(value: T): T => {
 
   // primitives are inherently cloned

@@ -1,4 +1,7 @@
 import { Key, MutationCb, MutationFn } from './types';
+/**
+ * Clones an object and all its subproperties
+ */
 export declare const deepClone: <T>(value: T) => T;
 /**
  * Checks whether the given value is an object
