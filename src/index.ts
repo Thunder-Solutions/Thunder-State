@@ -1,3 +1,3 @@
-import createStore from '../lib/createStore'
+import createStore from './lib/createStore'
 
 export { createStore }
