@@ -1,5 +1,5 @@
 // This is for testing the final build:
-import { createStore } from '../esm/thunderState.min.mjs'
+import { createStore } from '../../dist/index.mjs'
 
 const wait = time => new Promise(resolve => {
   setTimeout(() => { resolve() }, time)
