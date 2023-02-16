@@ -3,19 +3,15 @@
   "version": "0.0.1",
   "description": "[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)",
   "main": "index.js",
-  "workspaces": [
-    "./packages/*"
-  ],
   "devDependencies": {
     "@types/express": "^4.17.17",
     "bumpp": "^8.2.1"
   },
   "scripts": {
-    "install:core": "npm -w packages/core i",
-    "build:core": "npm -w packages/core run build",
-    "build": "npm run build:core",
-    "test:core": "npm -w packages/core test",
-    "test": "npm run test:core",
+    "build:core": "pnpm -F=@thundersolutions/core run build",
+    "build": "pnpm run build:core",
+    "test:core": "pnpm -F=@thundersolutions/core test",
+    "test": "pnpm run test:core",
     "release": "bumpp package.json packages/*/package.json --commit --push --tag && pnpm -r publish --access public",
     "start": "npx tsx fixtures/demoServer.ts"
   },
