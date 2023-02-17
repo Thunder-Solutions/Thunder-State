@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { AddWatcher, PublicInstance, Watcher } from './types'
+import { AddWatcher, State, Watcher } from './types'
 import { getValueFromPath } from './utilities'
 
 /**
  * Returns useful hooks as methods, concerning the provided store.
  */
-export const useStore = (state: PublicInstance) => ({ // implicit return based on shape of object below...
+export const useStore = (state: State) => ({ // implicit return based on shape of object below...
 
   /**
    * Respond to state changes with a callback.
