@@ -1,7 +1,7 @@
 /**
  * Use this to get the value at the end of a property chain via an array of keys.
  */
-export const getValueFromPath = (obj: object, path: string[], idx: number = 0) => {
+export const getValueFromPath = (obj: object, path: string[], idx: number = 0): unknown => {
   if (!Array.isArray(path)) {
     const ERROR_MESSAGE = 'Unable to get value from path because the path must be an array of strings.'
     throw new TypeError(ERROR_MESSAGE)

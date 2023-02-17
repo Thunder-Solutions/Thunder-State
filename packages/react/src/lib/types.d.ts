@@ -24,3 +24,9 @@ export type State = {
   watchers: Watchers;
   dispatchers: Dispatchers;
 }
+
+export type StateHooks = {
+  useWatch: (path: string | string[], watcherCallback: Watcher) => void;
+  useGet: (path: string | string[]) => any; // note: user is expected to type this, not us
+  useDispatcher: (key: string) => (payload: unknown) => Promise<void>;
+}

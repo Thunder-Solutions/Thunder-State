@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { AddWatcher, State, Watcher } from './types'
+import { AddWatcher, State, StateHooks, Watcher } from './types'
 import { getValueFromPath } from './utilities'
 
 /**
  * Returns useful hooks as methods, concerning the provided store.
  */
-export const useStore = (state: State) => ({ // implicit return based on shape of object below...
+export const useStore = (state: State): StateHooks => ({
 
   /**
    * Respond to state changes with a callback.
@@ -20,7 +20,7 @@ export const useStore = (state: State) => ({ // implicit return based on shape o
   useWatch: (path: string | string[], watcherCallback: Watcher): void => {
     useEffect(() => {
       const _path = typeof path === 'string' ? path.split('.') : path
-      const addWatcher: AddWatcher = getValueFromPath(state, ['watchers', ..._path])
+      const addWatcher = getValueFromPath(state, ['watchers', ..._path]) as AddWatcher
       addWatcher(watcherCallback)
       return () => {
         if (typeof addWatcher.destroy === 'undefined') return
@@ -40,7 +40,7 @@ export const useStore = (state: State) => ({ // implicit return based on shape o
    * );
    * ```
    */
-  useGet: (path: string | string[]): any => { // note: user is expected to type this, not us
+  useGet: (path: string | string[]): any => {
     const _path = typeof path === 'string' ? path.split('.') : path
     const getter = getValueFromPath(state, ['getters', ..._path])
     const [value, setValue] = useState(getter)
