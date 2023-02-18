@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build:core": "pnpm -F=@thundersolutions/core run build",
-    "build": "pnpm run build:core",
+    "build:react": "pnpm -F=@thunder-state/react run build",
+    "build": "pnpm run build:core && pnpm run build:react",
     "test:core": "pnpm -F=@thundersolutions/core test",
     "test": "pnpm run test:core",
     "release": "bumpp package.json packages/*/package.json --commit --push --tag && pnpm -r publish --access public",
