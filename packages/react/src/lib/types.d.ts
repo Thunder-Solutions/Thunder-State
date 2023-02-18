@@ -3,10 +3,13 @@ type KV<T> = { [key: Key]: T }
 
 export type Watcher = (value: unknown, callback: (destroy: DestroyWatcher) => void) => void;
 export type AddWatcher = {
-  destroy?: DestroyWatcher;
   (watcher: Watcher): void;
+  destroy?: DestroyWatcher;
+} & {
+  [key: Key]: AddWatcher;
 }
-export type DestroyWatcher = (watcher: Watcher) => void
+
+export type DestroyWatcher = () => void
 
 export type Getters = {
 
@@ -14,7 +17,7 @@ export type Getters = {
   [key: Key]: any;
 }
 export type Watchers = {
-  [key: Key]: AddWatcher | Watchers;
+  [key: Key]: AddWatcher;
 }
 export type Dispatcher = (payload: unknown) => Promise<void>
 export type Dispatchers = KV<Dispatcher>

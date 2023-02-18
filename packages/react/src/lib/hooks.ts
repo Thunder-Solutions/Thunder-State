@@ -1,73 +1,56 @@
 import { useEffect, useState } from 'react'
-import { AddWatcher, State, StateHooks, Watcher } from './types'
-import { getValueFromPath } from './utilities'
+import { State, Watchers } from './types'
 
 /**
- * Returns useful hooks as methods, concerning the provided store.
+ * Local function to wrap all watchers on the state with the useEffect hook from React
  */
-export const useStore = (state: State): StateHooks => ({
+const wrapWatchersInEffects = (watchers: Watchers): Watchers => {
+  const watcherEffects = {};
+  for (const key in watchers) {
 
-  /**
-   * Respond to state changes with a callback.
-   * @example
-   * ```js
-   * const store = useStore(userStore);
-   * store.useWatch('user.firstName', (newValue) => {
-   *  // respond to change
-   * });
-   * ```
-   */
-  useWatch: (path: string | string[], watcherCallback: Watcher): void => {
-    useEffect(() => {
-      const _path = typeof path === 'string' ? path.split('.') : path
-      const addWatcher = getValueFromPath(state, ['watchers', ..._path]) as AddWatcher
-      addWatcher(watcherCallback)
-      return () => {
-        if (typeof addWatcher.destroy === 'undefined') return
-        addWatcher.destroy(watcherCallback)
-      }
-    }, [])
-  },
+    // Don't wrap `destroy()` methods
+    if (key === 'destroy') {
+      watcherEffects[key] = watchers[key];
+      continue;
+    }
 
-  /**
-   * Get a value that auto-updates to stay in sync with the state.
-   * @example
-   * ```jsx
-   * const store = useStore(userStore);
-   * const firstName = store.useGet('user.firstName');
-   * return (
-   *  <h2>Welcome back, {firstName}</h2>
-   * );
-   * ```
-   */
-  useGet: (path: string | string[]): any => {
-    const _path = typeof path === 'string' ? path.split('.') : path
-    const getter = getValueFromPath(state, ['getters', ..._path])
-    const [value, setValue] = useState(getter)
-    useEffect(() => {
-      setValue(getter)
-    }, [getter])
-    return value
-  },
+    // Wrap each watcher in useEffect
+    watcherEffects[key] = (...args: any[]) => {
+      useEffect(() => {
+        const addWatcher = watchers[key];
 
-  /**
-   * Dispatch a state action with the provided payload.
-   * @example
-   * ```jsx
-   * const store = useStore(userStore);
-   * const updateUser = store.useDispatcher('updateUser');
-   * const handleLogin = async () => {
-   *   // ...
-   *   await updateUser(user);
-   * };
-   * return (
-   *   <!-- ... -->
-   *   <button onClick={handleLogin}>Login</button>
-   * );
-   * ```
-   */
-  useDispatcher: (key: string) => (payload: unknown): Promise<void> => {
-    const dispatcher = state.dispatchers[key]
-    return dispatcher(payload)
-  },
-})
+        // @ts-ignore: this is a higher order function - the args/types are for the original function to worry about
+        addWatcher(...args);
+
+        // destroy the watcher on cleanup
+        return () => { addWatcher.destroy(); };
+      }, [watchers[key]]);
+    };
+
+    // Recursively assign subproperties the same way
+    for (const subKey in watchers[key]) {
+      watcherEffects[key][subKey] = wrapWatchersInEffects(watchers[key][subKey])
+    }
+  }
+  return watcherEffects;
+}
+
+/**
+ * A React hook for safely using a Thunder State store in a component function
+ */
+export const useStore = (store: State): State => {
+
+  // Track Thunder State as React State
+  const [getters, updateGetters] = useState(store.getters);
+
+  // Keep local React state in sync with Thunder State
+  useEffect(() => {
+    updateGetters(store.getters);
+  }, [store.getters]);
+
+  return {
+    getters,
+    watchers: wrapWatchersInEffects(store.watchers),
+    dispatchers: store.dispatchers,
+  };
+}

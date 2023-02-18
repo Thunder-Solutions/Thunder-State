@@ -95,12 +95,17 @@ const UserStore = createStore({
 });
 
 const Greeting = () => {
-  const { useGet } = useStore(UserStore);
-  const displayName = useGet('displayName');
-  const email = useGet('details.email');
+  const userStore = useStore(UserStore);
+  const handleLogout = async () => {
+    // ... call logout API
+    userStore.dispatchers.updateUser({
+      displayName: '',
+      email: '',
+    });
+  };
   return (
-    <h1>Welcome back, {displayName}!</h1>
-    <p>Your email is: {email}</p>
+    <h1>Welcome back, {userStore.getters.displayName}!</h1>
+    <button onClick={handleLogout}>Log Out</button>
   );
 }
 
