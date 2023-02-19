@@ -84,7 +84,7 @@ UserStore.dispatchers.updateUser({
 
 ---
 
-To use this package with React, you'll want to import the main function from `@thunder-state/react`, which returns several hooks.
+To use this package with React, you'll want to import the main function from `@thunder-state/react`, which wraps each part of the state with the proper hooks to ensure a seamless integration.
 
 ```jsx
 import { createStore } from '@thunder-state/core';
