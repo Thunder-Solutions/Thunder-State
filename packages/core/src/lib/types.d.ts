@@ -46,16 +46,20 @@ export type Dispatchers = KV<Dispatcher>
 export type ComputedArg<UserDefinedState extends object> = KV<(state?: UserDefinedState) => unknown>
 export type ActionsArg = KV<Action>
 
-export type Store<UserDefinedState extends object> = {
-  getters: UserDefinedState;
+export type ComputedGetters<UserDefinedComputed> = {
+  [key in keyof UserDefinedComputed]: unknown;
+}
+
+export type Store<UserDefinedState extends object, UserDefinedComputed extends object> = {
+  getters: UserDefinedState & ComputedGetters<UserDefinedComputed>;
   watchers: Watchers;
   dispatchers: Dispatchers;
 }
 
-export type StoreConfig<UserDefinedState extends object> = {
+export type StoreConfig<UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>> = {
   name: string;
   state: UserDefinedState;
-  computed?: ComputedArg<UserDefinedState>;
+  computed?: UserDefinedComputed;
   actions?: ActionsArg;
   enableDevTools?: boolean;
 }

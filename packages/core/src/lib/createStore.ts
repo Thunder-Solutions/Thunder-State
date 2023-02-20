@@ -8,25 +8,25 @@ import { StoreConfig, PrivateProps, Store, ComputedArg } from './types'
 import { createDeepProxy } from './proxy/deepProxy'
 
 // The factory function for creating a new state
-const createStore = <UserDefinedState extends object>({
+const createStore = <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>({
   actions: _actions = {},
-  computed: _computed = {},
+  computed: _computed = {} as UserDefinedComputed,
   ...config
-}: StoreConfig<UserDefinedState>): Store<UserDefinedState> => {
+}: StoreConfig<UserDefinedState, UserDefinedComputed>): Store<UserDefinedState, UserDefinedComputed> => {
 
   // clone to create a private reference that can't be mutated from outside
   const {
     state: protectedState,
     name,
     enableDevTools = true,
-  } = deepClone(config) as StoreConfig<UserDefinedState>
+  } = deepClone(config) as StoreConfig<UserDefinedState, UserDefinedComputed>
 
   // shallow clone objects with methods
   const actions = { ..._actions }
   const computed = { ..._computed }
 
   // keep a reference to the returned object
-  const publicInstance: Store<UserDefinedState> = Object.seal({
+  const publicInstance: Store<UserDefinedState, UserDefinedComputed> = Object.seal({
     getters: createDeepProxy(protectedState, {}),
     watchers: {},
     dispatchers: {},
