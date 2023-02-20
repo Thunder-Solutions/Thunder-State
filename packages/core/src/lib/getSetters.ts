@@ -10,7 +10,7 @@ import { patchArray, withoutLast, deepClone } from './utilities'
 export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
   name: string,
   protectedState: UserDefinedState,
-  computed: ComputedArg<UserDefinedState>,
+  computed: UserDefinedComputed,
   publicInstance: Store<UserDefinedState, UserDefinedComputed>,
   privateProps: PrivateProps<UserDefinedState>,
 ): UserDefinedState => {

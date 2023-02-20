@@ -5,9 +5,9 @@ import { getStateSetError, getComputedError } from './utilities'
 /**
  * Get all the value getters from the state - which cannot be used to set the state
  */
-export default <UserDefinedState extends object, UserDefinedComputed extends object>(
+export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
   protectedState: UserDefinedState,
-  computed: ComputedArg<UserDefinedState>,
+  computed: UserDefinedComputed,
 ): UserDefinedState & ComputedGetters<UserDefinedComputed> => {
 
   // proxy can only get values, but will throw an error when trying to set
@@ -16,9 +16,11 @@ export default <UserDefinedState extends object, UserDefinedComputed extends obj
     { set: () => { throw getStateSetError() } },
   )
 
-  // add computed values to the getters proxy as well
+  // convert computed functions into getters
+  // (so they can be referenced without manually running the function)
+  const computedGetters = { ...computed }
   for (const key in computed) {
-    Object.defineProperty(getters, key, {
+    Object.defineProperty(computedGetters, key, {
       enumerable: true,
       get: () => {
 
@@ -36,5 +38,8 @@ export default <UserDefinedState extends object, UserDefinedComputed extends obj
   }
 
   // return both types of getters as one object
-  return getters as UserDefinedState & ComputedGetters<UserDefinedComputed>
+  return Object.seal({
+    ...getters,
+    ...computedGetters,
+  })
 }
