@@ -1,12 +1,12 @@
-import { ActionsArg, Dispatchers, PrivateProps, Store } from './types'
+import { ActionsArg, ComputedArg, Dispatchers, PrivateProps, Store } from './types'
 
 /**
  * Get dispatchers for each user-defined action
  */
-export default <UserDefinedState extends object>(
+export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
   name: string,
   actions: ActionsArg,
-  publicInstance: Store<UserDefinedState>,
+  publicInstance: Store<UserDefinedState, UserDefinedComputed>,
   { setters, queue, actionHistory, enableDevTools }: PrivateProps<UserDefinedState>,
 ): Dispatchers => {
   return Object.keys(actions).reduce((dispatchers, key) => {

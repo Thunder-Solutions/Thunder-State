@@ -1,11 +1,11 @@
-import { AddWatcher, Key, PrivateProps, Store, Watcher, Watchers } from './types'
+import { AddWatcher, ComputedArg, Key, PrivateProps, Store, Watcher, Watchers } from './types'
 import { getValueFromPath, isObject } from './utilities'
 
 /**
  * Get properties as "add watcher" methods so the end user can react to state changes
  */
-export default <UserDefinedState extends object>(
-  { getters }: Store<UserDefinedState>,
+export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
+  { getters }: Store<UserDefinedState, UserDefinedComputed>,
   { userDefinedWatchers }: PrivateProps<UserDefinedState>,
 ): Watchers => {
 
