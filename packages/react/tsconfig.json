@@ -10,6 +10,9 @@
     "moduleResolution": "node",
 
     // specify the version to enable some features
-    "target": "ESNext"
+    "target": "ESNext",
+
+    // enable react
+    "jsx": "react-jsx",
   }
 }

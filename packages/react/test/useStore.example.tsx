@@ -1,6 +1,5 @@
 import { createStore } from '../../core/src/index';
 import { useStore } from '../src/index';
-import * as React from 'react';
 
 const UserStore = createStore({
 
