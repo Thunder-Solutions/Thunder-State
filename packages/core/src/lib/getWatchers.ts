@@ -1,13 +1,13 @@
-import { AddWatcher, Key, PrivateProps, PublicInstance, Watcher, Watchers } from './types'
+import { AddWatcher, Key, PrivateProps, Store, Watcher, Watchers } from './types'
 import { getValueFromPath, isObject } from './utilities'
 
 /**
  * Get properties as "add watcher" methods so the end user can react to state changes
  */
-export default ({ getters }: PublicInstance, { userDefinedWatchers }: PrivateProps) => {
+export default <UserDefinedState extends object>({ getters }: Store<UserDefinedState>, { userDefinedWatchers }: PrivateProps<UserDefinedState>) => {
 
   // create a closure so we have access to the path in the reducer
-  const getReducer = (_path: Key[] = []) => (watchers, key) => {
+  const getReducer = (_path: Key[] = []) => (watchers: Watchers, key: Key) => {
     const path = [..._path, key]
 
     // define the add watcher method

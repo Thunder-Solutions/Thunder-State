@@ -1,17 +1,17 @@
-import { createDeepProxy } from './proxy/deepProxy'
+import { createDeepProxy, DeepProxy } from './proxy/deepProxy'
 import getGetters from './getGetters'
 import getRunWatchers from './getRunWatchers'
-import { ComputedArg, Key, PrivateProps, PublicInstance, Setters, StateObj } from './types'
+import { ComputedArg, Key, PrivateProps, Store } from './types'
 import { patchArray, withoutLast, deepClone } from './utilities'
 
 /**
  * Get state as setters so we can intercept the mutations as they occur.
  */
-export default (name: string, protectedState: StateObj, computed: ComputedArg, publicInstance: PublicInstance, privateProps: PrivateProps): Setters => {
+export default <UserDefinedState extends object>(name: string, protectedState: UserDefinedState, computed: ComputedArg<UserDefinedState>, publicInstance: Store<UserDefinedState>, privateProps: PrivateProps<UserDefinedState>): DeepProxy<UserDefinedState> => {
   const { enableDevTools } = privateProps
 
   // a reusable function to add a mutation to the action entry in the history
-  const recordHistory = (oldValue: unknown, newValue: unknown, path: Key[], { recordMutations, actionHistory }: PrivateProps) => {
+  const recordHistory = (oldValue: unknown, newValue: unknown, path: Key[], { recordMutations, actionHistory }: PrivateProps<UserDefinedState>) => {
     if (!recordMutations || !enableDevTools) return
     actionHistory[0].mutations.push({
       oldValue: deepClone(oldValue),

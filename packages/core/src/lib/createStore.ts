@@ -4,36 +4,37 @@ import getSetters from './getSetters'
 import getDispatchers from './getDispatchers'
 import connectToDevTools from './connectToDevTools'
 import { deepClone } from './utilities'
-import { StoreConfig, PrivateProps, PublicInstance } from './types'
+import { StoreConfig, PrivateProps, Store } from './types'
+import { createDeepProxy } from './proxy/deepProxy'
 
 // The factory function for creating a new state
-const createStore = ({
+const createStore = <UserDefinedState extends object>({
   actions: _actions = {},
   computed: _computed = {},
   ...config
-}: StoreConfig): PublicInstance => {
+}: StoreConfig<UserDefinedState>): Store<UserDefinedState> => {
 
   // clone to create a private reference that can't be mutated from outside
   const {
     state: protectedState = {},
     name,
     enableDevTools = true,
-  } = deepClone(config)
+  } = deepClone(config) as StoreConfig<UserDefinedState>
 
   // shallow clone objects with methods
   const actions = { ..._actions }
   const computed = { ..._computed }
 
   // keep a reference to the returned object
-  const publicInstance: PublicInstance = Object.seal({
-    getters: {},
+  const publicInstance: Store<UserDefinedState> = Object.seal({
+    getters: createDeepProxy(protectedState, {}),
     watchers: {},
     dispatchers: {},
   })
 
   // establish an internal state for tracking things privately
-  const privateProps: PrivateProps = {
-    setters: {},
+  const privateProps: PrivateProps<UserDefinedState> = {
+    setters: createDeepProxy(protectedState, {}),
     queue: [],
     actionHistory: [],
     actionFuture: [],

@@ -1,10 +1,10 @@
-import { AddWatcher, ComputedArg, Key, PrivateProps, PublicInstance, Watcher } from './types'
+import { AddWatcher, ComputedArg, Key, PrivateProps, Store, Watcher } from './types'
 import { getValueFromPath, trimUndef } from './utilities'
 
 /**
  * Prepares the runWatchers function with prerequisite data and a closure
  */
-export default (name: string, computed: ComputedArg, publicInstance: PublicInstance, { userDefinedWatchers, enableDevTools }: PrivateProps) => {
+export default <UserDefinedState extends object>(name: string, computed: ComputedArg<UserDefinedState>, publicInstance: Store<UserDefinedState>, { userDefinedWatchers, enableDevTools }: PrivateProps<UserDefinedState>) => {
 
   // store previous values from computed properties
   const { getters } = publicInstance

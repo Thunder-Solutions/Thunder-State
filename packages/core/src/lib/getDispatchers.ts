@@ -1,9 +1,9 @@
-import { ActionsArg, Dispatchers, PrivateProps, PublicInstance } from './types'
+import { ActionsArg, Dispatchers, PrivateProps, Store } from './types'
 
 /**
  * Get dispatchers for each user-defined action
  */
-export default (name: string, actions: ActionsArg, publicInstance: PublicInstance, { setters, queue, actionHistory, enableDevTools }: PrivateProps): Dispatchers => {
+export default <UserDefinedState extends object>(name: string, actions: ActionsArg, publicInstance: Store<UserDefinedState>, { setters, queue, actionHistory, enableDevTools }: PrivateProps<UserDefinedState>): Dispatchers => {
   return Object.keys(actions).reduce((dispatchers, key) => {
 
     // define the dispatcher method corresponding to the action
