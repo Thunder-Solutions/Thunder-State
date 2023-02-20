@@ -1,11 +1,14 @@
 import { createDeepProxy } from './proxy/deepProxy'
-import { ComputedArg } from './types'
+import { ComputedArg, ComputedGetters } from './types'
 import { getStateSetError, getComputedError } from './utilities'
 
 /**
  * Get all the value getters from the state - which cannot be used to set the state
  */
-export default <UserDefinedState extends object>(protectedState: UserDefinedState, computed: ComputedArg<UserDefinedState>): UserDefinedState => {
+export default <UserDefinedState extends object, UserDefinedComputed extends object>(
+  protectedState: UserDefinedState,
+  computed: ComputedArg<UserDefinedState>,
+): UserDefinedState & ComputedGetters<UserDefinedComputed> => {
 
   // proxy can only get values, but will throw an error when trying to set
   const getters = createDeepProxy(
@@ -33,5 +36,5 @@ export default <UserDefinedState extends object>(protectedState: UserDefinedStat
   }
 
   // return both types of getters as one object
-  return getters
+  return getters as UserDefinedState & ComputedGetters<UserDefinedComputed>
 }

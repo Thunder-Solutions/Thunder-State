@@ -4,7 +4,10 @@ import { getValueFromPath, deepClone } from './utilities'
 /**
  * The "time travel" function used to rewind and fast-forward actions
  */
-export default <UserDefinedState extends object>(num: number, privateProps: PrivateProps<UserDefinedState>) => {
+export default <UserDefinedState extends object>(
+  num: number,
+  privateProps: PrivateProps<UserDefinedState>,
+): void => {
   const { setters, actionHistory, actionFuture } = privateProps
 
   // rewind if num is negative

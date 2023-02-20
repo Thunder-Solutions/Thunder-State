@@ -7,7 +7,13 @@ import { patchArray, withoutLast, deepClone } from './utilities'
 /**
  * Get state as setters so we can intercept the mutations as they occur.
  */
-export default <UserDefinedState extends object>(name: string, protectedState: UserDefinedState, computed: ComputedArg<UserDefinedState>, publicInstance: Store<UserDefinedState>, privateProps: PrivateProps<UserDefinedState>): UserDefinedState => {
+export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
+  name: string,
+  protectedState: UserDefinedState,
+  computed: ComputedArg<UserDefinedState>,
+  publicInstance: Store<UserDefinedState, UserDefinedComputed>,
+  privateProps: PrivateProps<UserDefinedState>,
+): UserDefinedState => {
   const { enableDevTools } = privateProps
 
   // a reusable function to add a mutation to the action entry in the history

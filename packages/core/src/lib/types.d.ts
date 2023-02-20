@@ -50,7 +50,7 @@ export type ComputedGetters<UserDefinedComputed> = {
   [key in keyof UserDefinedComputed]: unknown;
 }
 
-export type Store<UserDefinedState extends object, UserDefinedComputed extends object> = {
+export type Store<UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>> = {
   getters: UserDefinedState & ComputedGetters<UserDefinedComputed>;
   watchers: Watchers;
   dispatchers: Dispatchers;

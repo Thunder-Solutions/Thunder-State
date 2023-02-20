@@ -1,11 +1,15 @@
 import { isObject, getPojo } from './utilities'
 import timeTravel from './timeTravel'
-import { PrivateProps, Store } from './types'
+import { ComputedArg, PrivateProps, Store } from './types'
 
 /**
  * Prepares the "Thunder State Dev Tools" browser extension.
  */
-export default <UserDefinedState extends object>(name: string, { getters }: Store<UserDefinedState>, privateProps: PrivateProps<UserDefinedState>) => {
+export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
+  name: string,
+  { getters }: Store<UserDefinedState, UserDefinedComputed>,
+  privateProps: PrivateProps<UserDefinedState>,
+): void => {
 
   // if not using browser, can't connect to dev tools; skip
   if (typeof window === 'undefined') return

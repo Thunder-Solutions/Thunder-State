@@ -4,7 +4,12 @@ import { getValueFromPath, trimUndef } from './utilities'
 /**
  * Prepares the runWatchers function with prerequisite data and a closure
  */
-export default <UserDefinedState extends object>(name: string, computed: ComputedArg<UserDefinedState>, publicInstance: Store<UserDefinedState>, { userDefinedWatchers, enableDevTools }: PrivateProps<UserDefinedState>) => {
+export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
+  name: string,
+  computed: ComputedArg<UserDefinedState>,
+  publicInstance: Store<UserDefinedState, UserDefinedComputed>,
+  { userDefinedWatchers, enableDevTools }: PrivateProps<UserDefinedState>,
+) => {
 
   // store previous values from computed properties
   const { getters } = publicInstance

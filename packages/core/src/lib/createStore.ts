@@ -27,7 +27,7 @@ const createStore = <UserDefinedState extends object, UserDefinedComputed extend
 
   // keep a reference to the returned object
   const publicInstance: Store<UserDefinedState, UserDefinedComputed> = Object.seal({
-    getters: createDeepProxy(protectedState, {}),
+    getters: createDeepProxy({ ...protectedState, ...computed }, {}),
     watchers: {},
     dispatchers: {},
   })
