@@ -1,9 +1,5 @@
-import { DeepProxy } from './proxy/deepProxy'
-
 export type Key = string | symbol
 type KV<T> = { [key: Key]: T }
-
-export type StateProxy<UserDefinedState extends object> = DeepProxy<UserDefinedState>
 
 export type Mutation = {
   oldValue: unknown;
@@ -26,8 +22,8 @@ export type AddWatcher = {
 }
 
 export type ActionArgs<UserDefinedState extends object> = {
-  state: DeepProxy<UserDefinedState>,
-  getters: DeepProxy<UserDefinedState>,
+  state: UserDefinedState,
+  getters: UserDefinedState,
   dispatchers: KV<Dispatcher>,
   payload: unknown,
 }
@@ -36,7 +32,7 @@ export type Action = <UserDefinedState extends object>(args: ActionArgs<UserDefi
 export type Dispatcher = (payload: unknown) => Promise<void>
 
 export type PrivateProps<UserDefinedState extends object> = {
-  setters: DeepProxy<UserDefinedState>;
+  setters: UserDefinedState;
   queue: Promise<void>[];
   actionHistory: ActionEntry[];
   actionFuture: ActionEntry[];
@@ -47,15 +43,14 @@ export type PrivateProps<UserDefinedState extends object> = {
 
 export type Watchers = KV<AddWatcher>
 export type Dispatchers = KV<Dispatcher>
+export type ComputedArg<UserDefinedState extends object> = KV<(state?: UserDefinedState) => unknown>
+export type ActionsArg = KV<Action>
 
 export type Store<UserDefinedState extends object> = {
-  getters: StateProxy<UserDefinedState>;
+  getters: UserDefinedState;
   watchers: Watchers;
   dispatchers: Dispatchers;
 }
-
-export type ComputedArg<UserDefinedState extends object> = KV<(getters?: StateProxy<UserDefinedState>) => unknown>
-export type ActionsArg = KV<Action>
 
 export type StoreConfig<UserDefinedState extends object> = {
   name: string;

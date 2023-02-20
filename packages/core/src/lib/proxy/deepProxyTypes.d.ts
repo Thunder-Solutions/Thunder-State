@@ -1,4 +1,3 @@
-import { DeepProxy } from './deepProxy'
 import { Key } from '../types'
 
 export type DeepProxyHandler<T extends object> = {
@@ -12,8 +11,8 @@ export type ProxyUtility = {
   getProxy: () => ProxyConstructor;
 }
 
-export type ProxyOptions = {
-  _this?: DeepProxy<{ [key: Key]: unknown }>;
+export type ProxyOptions<T> = {
+  _this?: T;
   revocable?: boolean;
   path?: Key[];
 }

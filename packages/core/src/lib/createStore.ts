@@ -4,7 +4,7 @@ import getSetters from './getSetters'
 import getDispatchers from './getDispatchers'
 import connectToDevTools from './connectToDevTools'
 import { deepClone } from './utilities'
-import { StoreConfig, PrivateProps, Store } from './types'
+import { StoreConfig, PrivateProps, Store, ComputedArg } from './types'
 import { createDeepProxy } from './proxy/deepProxy'
 
 // The factory function for creating a new state
@@ -16,7 +16,7 @@ const createStore = <UserDefinedState extends object>({
 
   // clone to create a private reference that can't be mutated from outside
   const {
-    state: protectedState = {},
+    state: protectedState,
     name,
     enableDevTools = true,
   } = deepClone(config) as StoreConfig<UserDefinedState>
