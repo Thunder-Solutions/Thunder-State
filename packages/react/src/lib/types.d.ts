@@ -19,17 +19,19 @@ export type Getters = {
 export type Watchers = {
   [key: Key]: AddWatcher;
 }
-export type Dispatcher = (payload: unknown) => Promise<void>
+
+// TODO: use a generic here instead of any
+export type Dispatcher = (payload: any) => Promise<void>
 export type Dispatchers = KV<Dispatcher>
 
-export type State = {
-  getters: Getters;
-  watchers: Watchers;
-  dispatchers: Dispatchers;
+
+export type ComputedArg<UserDefinedState extends object> = KV<(state?: UserDefinedState) => unknown>
+export type ComputedGetters<UserDefinedComputed> = {
+  [key in keyof UserDefinedComputed]: unknown;
 }
 
-export type StateHooks = {
-  useWatch: (path: string | string[], watcherCallback: Watcher) => void;
-  useGet: (path: string | string[]) => any; // note: user is expected to type this, not us
-  useDispatcher: (key: string) => (payload: unknown) => Promise<void>;
+export type Store<UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>> = {
+  getters: UserDefinedState & ComputedGetters<UserDefinedComputed>;
+  watchers: Watchers;
+  dispatchers: Dispatchers;
 }

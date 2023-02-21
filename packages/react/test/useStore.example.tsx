@@ -16,7 +16,6 @@ const UserStore = createStore({
     updateUser({ state, payload }) {
       state.displayName = payload.displayName;
       state.details.email = payload.email;
-      state.invalid = true;
     },
   },
 
