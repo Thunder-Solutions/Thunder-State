@@ -9,7 +9,7 @@ export type Mutation = {
 
 export type ActionEntry = {
   name: string;
-  payload: unknown;
+  payload: any; // TODO: use a generic here instead of any
   mutations: Mutation[];
 }
 
@@ -21,15 +21,17 @@ export type AddWatcher = {
   (watcher: Watcher): void;
 }
 
-export type ActionArgs<UserDefinedState extends object> = {
+export type ActionArgs<UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>> = {
   state: UserDefinedState,
-  getters: UserDefinedState,
+  getters: UserDefinedState & ComputedGetters<UserDefinedComputed>,
   dispatchers: KV<Dispatcher>,
-  payload: unknown,
+  payload: any, // TODO: use a generic here instead of any
 }
 
-export type Action = <UserDefinedState extends object>(args: ActionArgs<UserDefinedState>, done?: (value: void | PromiseLike<void>) => void) => Promise<void> | void
-export type Dispatcher = (payload: unknown) => Promise<void>
+export type Action<UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>> = (args: ActionArgs<UserDefinedState, UserDefinedComputed>, done?: (value: void | PromiseLike<void>) => void) => Promise<void> | void
+
+// TODO: use a generic here instead of any
+export type Dispatcher = (payload: any) => Promise<void>
 
 export type PrivateProps<UserDefinedState extends object> = {
   setters: UserDefinedState;
@@ -44,7 +46,7 @@ export type PrivateProps<UserDefinedState extends object> = {
 export type Watchers = KV<AddWatcher>
 export type Dispatchers = KV<Dispatcher>
 export type ComputedArg<UserDefinedState extends object> = KV<(state?: UserDefinedState) => unknown>
-export type ActionsArg = KV<Action>
+export type ActionsArg<UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>> = KV<Action<UserDefinedState, UserDefinedComputed>>
 
 export type ComputedGetters<UserDefinedComputed> = {
   [key in keyof UserDefinedComputed]: unknown;
@@ -60,7 +62,7 @@ export type StoreConfig<UserDefinedState extends object, UserDefinedComputed ext
   name: string;
   state: UserDefinedState;
   computed?: UserDefinedComputed;
-  actions?: ActionsArg;
+  actions?: ActionsArg<UserDefinedState, UserDefinedComputed>;
   enableDevTools?: boolean;
 }
 
