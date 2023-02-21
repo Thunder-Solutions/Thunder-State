@@ -7,9 +7,9 @@ const UserStore = createStore({
   name: 'User',
 
   state: {
-    displayName: 'demo_user',
+    displayName: 'user_one',
     details: {
-      email: 'user@demo.com',
+      email: 'user_one@demo.com',
     },
   },
 
@@ -33,19 +33,25 @@ const UseStoreExample = () => {
     });
   };
 
-  const [msg, setMsg] = useState('No changes yet.');
-  userStore.watchers.displayName((newName: string) => {
-    setMsg(`Changed to: ${newName}`);
+  const [nameMsg, setNameMsg] = useState('No changes yet.');
+  const [emailMsg, setEmailMsg] = useState('No changes yet.');
+  userStore.watchers.displayName((newName: string, destroy) => {
+    setNameMsg(`Name changed to: ${newName}`);
+    destroy();
+  });
+  userStore.watchers.details.email((newEmail: string) => {
+    setEmailMsg(`Email changed to: ${newEmail}`);
   });
 
   return (
     <>
-      <h1>{userStore.getters.displayName}</h1>
-      <p>{msg}</p>
+      <h1 data-testid="title">{userStore.getters.displayName} ({userStore.getters.details.email})</h1>
+      <p data-testid="nameMsg">{nameMsg}</p>
+      <p data-testid="emailMsg">{emailMsg}</p>
       <form onSubmit={handleChangeUser}>
-        <input name="displayName" />
-        <input name="email" />
-        <button>Change User</button>
+        <input data-testid="displayNameInput" name="displayName" />
+        <input data-testid="emailInput" name="email" />
+        <button data-testid="submitBtn">Change User</button>
       </form>
     </>
   );
