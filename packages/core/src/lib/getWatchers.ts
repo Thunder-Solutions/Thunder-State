@@ -13,30 +13,21 @@ export default <UserDefinedState extends object, UserDefinedComputed extends Com
   const getReducer = (_path: Key[] = []) => (watchers: Watchers, key: Key) => {
     const path = [..._path, key]
 
-    // define the add watcher method
-    const addWatcher: AddWatcher = (callback: Watcher) => {
-      userDefinedWatchers.get(addWatcher)?.add(callback)
-    }
-    const _watchers: Set<Watcher> = new Set()
-    userDefinedWatchers.set(addWatcher, _watchers)
-    watchers[key] = addWatcher
-    watchers[key].destroy = (watcher: Watcher) => new Promise(resolve => {
-
-      // use 0 timeout to avoid interfering with async actions
-      setTimeout(() => {
-        resolve(_watchers.delete(watcher))
-      })
-    })
-
     // if the getter value is an object, recursively add child properties
     const value = getValueFromPath(getters, path)
-    if (isObject(value)) {
-      const nestedWatchers = Object.keys(value).reduce(getReducer(path), {})
-      const currentWatcherObj = watchers[key]
-      for (const key in nestedWatchers) {
-        currentWatcherObj[key] = nestedWatchers[key]
-      }
-    }
+    const nestedWatchers = isObject(value)
+      ? Object.keys(value).reduce(getReducer(path), {})
+      : {}
+
+    // define the add watcher method
+    const addWatcher: AddWatcher = Object.assign((callback: Watcher) => {
+      userDefinedWatchers.get(addWatcher)?.add(callback)
+    }, nestedWatchers)
+
+    const addedWatchers: Set<Watcher> = new Set()
+    userDefinedWatchers.set(addWatcher, addedWatchers)
+
+    watchers[key] = addWatcher
 
     // return the resulting object
     return watchers

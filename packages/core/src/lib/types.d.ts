@@ -14,11 +14,11 @@ export type ActionEntry = {
 }
 
 export type DestroyWatcher = (watcher: Watcher) => void
-export type Watcher = (value: unknown, callback: (destroy: DestroyWatcher) => void) => void;
+export type Watcher = (value: unknown, destroy: DestroyWatcher) => void;
 
 export type AddWatcher = {
-  destroy?: DestroyWatcher;
   (watcher: Watcher): void;
+  [key: Key]: AddWatcher;
 }
 
 export type ActionArgs<UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>> = {

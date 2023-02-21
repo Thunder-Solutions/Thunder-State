@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import { State, Watchers } from './types'
+
+// TODO: move these types to a common location
+import { ComputedArg, Store, Watcher, Watchers } from '../../../core/src/lib/types'
 
 /**
  * Local function to wrap all watchers on the state with the useEffect hook from React
@@ -15,15 +17,19 @@ const wrapWatchersInEffects = (watchers: Watchers): Watchers => {
     }
 
     // Wrap each watcher in useEffect
-    watcherEffects[key] = (...args: any[]) => {
+    watcherEffects[key] = (watcher: Watcher) => {
       useEffect(() => {
         const addWatcher = watchers[key];
 
-        // @ts-ignore: this is a higher order function - the args/types are for the original function to worry about
-        addWatcher(...args);
+        let isActive = true
+        const _watcher: Watcher = (newVal, destroy) => {
+          if (!isActive) destroy(_watcher);
+          else watcher(newVal, destroy);
+        };
+        addWatcher(_watcher);
 
-        // destroy the watcher on cleanup
-        return () => { addWatcher.destroy(); };
+        // set the flag to make sure watcher is destroyed on cleanup
+        return () => { isActive = false };
       }, [watchers[key]]);
     };
 
@@ -38,7 +44,9 @@ const wrapWatchersInEffects = (watchers: Watchers): Watchers => {
 /**
  * A React hook for safely using a Thunder State store in a component function
  */
-export const useStore = (store: State): State => {
+export const useStore = <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
+  store: Store<UserDefinedState, UserDefinedComputed>,
+): Store<UserDefinedState, UserDefinedComputed> => {
 
   // Track Thunder State as React State
   const [getters, updateGetters] = useState(store.getters);
