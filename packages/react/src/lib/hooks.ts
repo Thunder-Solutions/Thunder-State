@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-// TODO: move these types to a common location
-import { ComputedArg, Store, Watcher, Watchers } from '../../../core/src/lib/types'
+// TODO: after the core package is published, import this as a peer dependency
+import { ComputedArg, Store, Watcher, Watchers } from '../../../core/src/index'
 
 /**
  * Local function to wrap all watchers on the state with the useEffect hook from React
