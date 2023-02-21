@@ -1,5 +1,5 @@
 {
-  "name": "@thundersolutions/core",
+  "name": "@thunder-state/core",
   "version": "1.0.0",
   "description": "Complex state management made easy.",
   "main": "./dist/index.cjs",
