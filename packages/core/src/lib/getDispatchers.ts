@@ -5,7 +5,7 @@ import { ActionsArg, ComputedArg, Dispatchers, PrivateProps, Store } from './typ
  */
 const getDispatchers = <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
   name: string,
-  actions: ActionsArg,
+  actions: ActionsArg<UserDefinedState, UserDefinedComputed>,
   publicInstance: Store<UserDefinedState, UserDefinedComputed>,
   { setters, queue, actionHistory, enableDevTools }: PrivateProps<UserDefinedState>,
 ): Dispatchers => {
