@@ -4,7 +4,7 @@ import { getValueFromPath, isObject } from './utilities'
 /**
  * Get properties as "add watcher" methods so the end user can react to state changes
  */
-export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
+const getWatchers = <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
   { getters }: Store<UserDefinedState, UserDefinedComputed>,
   { userDefinedWatchers }: PrivateProps<UserDefinedState>,
 ): Watchers => {
@@ -36,3 +36,5 @@ export default <UserDefinedState extends object, UserDefinedComputed extends Com
   // kick off the reducer recursion
   return Object.keys(getters).reduce(getReducer(), {})
 }
+
+export default getWatchers

@@ -5,7 +5,7 @@ import { ComputedArg, PrivateProps, Store } from './types'
 /**
  * Prepares the "Thunder State Dev Tools" browser extension.
  */
-export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
+const connectToDevTools = <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
   name: string,
   { getters }: Store<UserDefinedState, UserDefinedComputed>,
   privateProps: PrivateProps<UserDefinedState>,
@@ -38,3 +38,5 @@ export default <UserDefinedState extends object, UserDefinedComputed extends Com
     timeTravel(lastIdx, privateProps)
   })
 }
+
+export default connectToDevTools

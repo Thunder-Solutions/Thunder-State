@@ -7,7 +7,7 @@ import { patchArray, withoutLast, deepClone } from './utilities'
 /**
  * Get state as setters so we can intercept the mutations as they occur.
  */
-export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
+const getSetters = <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
   name: string,
   protectedState: UserDefinedState,
   computed: UserDefinedComputed,
@@ -109,3 +109,5 @@ export default <UserDefinedState extends object, UserDefinedComputed extends Com
     }
   ))
 }
+
+export default getSetters

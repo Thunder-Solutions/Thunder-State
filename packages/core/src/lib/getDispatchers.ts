@@ -3,7 +3,7 @@ import { ActionsArg, ComputedArg, Dispatchers, PrivateProps, Store } from './typ
 /**
  * Get dispatchers for each user-defined action
  */
-export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
+const getDispatchers = <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
   name: string,
   actions: ActionsArg,
   publicInstance: Store<UserDefinedState, UserDefinedComputed>,
@@ -54,3 +54,5 @@ export default <UserDefinedState extends object, UserDefinedComputed extends Com
     return dispatchers
   }, {})
 }
+
+export default getDispatchers

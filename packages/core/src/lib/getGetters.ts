@@ -5,7 +5,7 @@ import { getStateSetError, getComputedError } from './utilities'
 /**
  * Get all the value getters from the state - which cannot be used to set the state
  */
-export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
+const getGetters = <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
   protectedState: UserDefinedState,
   computed: UserDefinedComputed,
 ): UserDefinedState & ComputedGetters<UserDefinedComputed> => {
@@ -43,3 +43,5 @@ export default <UserDefinedState extends object, UserDefinedComputed extends Com
     ...computedGetters,
   })
 }
+
+export default getGetters

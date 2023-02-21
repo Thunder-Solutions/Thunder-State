@@ -4,7 +4,7 @@ import { getValueFromPath, trimUndef } from './utilities'
 /**
  * Prepares the runWatchers function with prerequisite data and a closure
  */
-export default <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
+const getRunWatchers = <UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>>(
   name: string,
   computed: ComputedArg<UserDefinedState>,
   publicInstance: Store<UserDefinedState, UserDefinedComputed>,
@@ -22,7 +22,7 @@ export default <UserDefinedState extends object, UserDefinedComputed extends Com
   /**
    * The runWatchers function triggers user-defined watcher methods for the given property
    */
-  return (target, path, _newValue) => {
+  return (target: unknown, path: Key[], _newValue: unknown) => {
     const { getters, watchers } = publicInstance
 
     // handle array watchers by passing the entire array
@@ -82,3 +82,5 @@ export default <UserDefinedState extends object, UserDefinedComputed extends Com
     }
   }
 }
+
+export default getRunWatchers
