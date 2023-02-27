@@ -18,7 +18,7 @@ const getGetters = <UserDefinedState extends object, UserDefinedComputed extends
 
   // convert computed functions into getters
   // (so they can be referenced without manually running the function)
-  const computedGetters = { ...computed }
+  const computedGetters = {}
   for (const key in computed) {
     Object.defineProperty(computedGetters, key, {
       enumerable: true,
@@ -27,7 +27,7 @@ const getGetters = <UserDefinedState extends object, UserDefinedComputed extends
         // if this property exists as a computed value...
         if (key in computed) {
           try {
-            return computed[key](getters)
+            return computed[key]({ ...getters, ...computedGetters })
           } catch (err) {
             throw getComputedError(key, err)
           }
@@ -40,7 +40,7 @@ const getGetters = <UserDefinedState extends object, UserDefinedComputed extends
   // return both types of getters as one object
   return Object.seal({
     ...getters,
-    ...computedGetters,
+    ...computedGetters as ComputedGetters<UserDefinedComputed>,
   })
 }
 
