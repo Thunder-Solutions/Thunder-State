@@ -30,7 +30,7 @@ export type ActionArgs<UserDefinedState extends object, UserDefinedComputed exte
 export type Action<UserDefinedState extends object, UserDefinedComputed extends ComputedArg<UserDefinedState>> = (args: ActionArgs<UserDefinedState, UserDefinedComputed>, done?: (value: void | PromiseLike<void>) => void) => Promise<void> | void
 
 // TODO: use a generic here instead of any
-export type Dispatcher = (payload: any) => Promise<void>
+export type Dispatcher = (payload?: any) => Promise<void>
 
 export type PrivateProps<UserDefinedState extends object> = {
   setters: UserDefinedState;

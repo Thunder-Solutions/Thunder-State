@@ -12,7 +12,8 @@ const getDispatchers = <UserDefinedState extends object, UserDefinedComputed ext
   return Object.keys(actions).reduce((dispatchers, key) => {
 
     // define the dispatcher method corresponding to the action
-    dispatchers[key] = async (payload: unknown) => {
+    // TODO: use a generic here instead of any
+    dispatchers[key] = async (payload?: any) => {
       const action = actions[key]
 
       // append this action as a promise to the queue
