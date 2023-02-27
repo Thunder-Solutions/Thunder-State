@@ -27,7 +27,7 @@ export const createDeepProxy = <T extends object>(
     : Proxy.revocable
 
   // define the proxy
-  const result = _this ?? createDeepProxy(target, handler)
+  const result = _this ?? { ...target }
   Object.keys(target).forEach(key => {
     const path = [...basePath, key]
 
