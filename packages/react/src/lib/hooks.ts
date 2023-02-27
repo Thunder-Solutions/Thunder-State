@@ -23,9 +23,8 @@ const wrapWatchersInEffects = (watchers: Watchers): Watchers => {
 
         let isActive = true
         const _watcher: Watcher = (newVal, destroy) => {
-          const _destroy = () => destroy(_watcher);
-          if (!isActive) _destroy();
-          else watcher(newVal, _destroy);
+          if (!isActive) destroy();
+          else watcher(newVal, destroy);
         };
         addWatcher(_watcher);
 

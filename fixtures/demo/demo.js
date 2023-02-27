@@ -77,7 +77,7 @@ emailEl.textContent = appState.getters.account.settings.email
 appState.watchers.account.user.username(newValue => usernameEl.textContent = newValue)
 appState.watchers.account.user.username((newValue, destroy) => {
   console.log('watcher1', newValue)
-  destroy()
+  return destroy()
 })
 appState.watchers.account.user.username(newValue => console.log('watcher2', newValue))
 appState.watchers.account.settings.email(newValue => emailEl.textContent = newValue)
@@ -180,10 +180,12 @@ otherState.dispatchers.removeValue([1, 1])
 })()
 
 ;(async () => {
-  const testWatcher = newColor => { console.warn('test watcher:', newColor) }
+  const testWatcher = (newColor, destroy) => {
+    console.warn('test watcher:', newColor)
+    return destroy()
+  }
   otherState.watchers.color(testWatcher)
   otherState.dispatchers.changeColor('green')
-  await otherState.watchers.color.destroy(testWatcher)
   otherState.dispatchers.changeColor('purple')
 })()
 

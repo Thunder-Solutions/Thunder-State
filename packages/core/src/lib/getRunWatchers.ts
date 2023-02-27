@@ -44,14 +44,14 @@ const getRunWatchers = <UserDefinedState extends object, UserDefinedComputed ext
       // call the watchers at the current path
       const addWatcher = getValueFromPath(watchers, _path) as AddWatcher
       const _watchers: Set<Watcher> = userDefinedWatchers.get(addWatcher) ?? new Set()
-      const destroy = (watcher: Watcher) => new Promise(resolve => {
+      const getDestroy = (watcher: Watcher) => () => new Promise(resolve => {
 
         // use 0 timeout to avoid interfering with async actions
         setTimeout(() => {
           resolve(_watchers.delete(watcher))
         })
       })
-      _watchers.forEach(watcher => watcher(watcherValue, destroy))
+      _watchers.forEach(watcher => watcher(watcherValue, getDestroy(watcher)))
     }
 
     // call the watchers of all computed properties that use this property
@@ -60,14 +60,14 @@ const getRunWatchers = <UserDefinedState extends object, UserDefinedComputed ext
       const _cValue = Array.isArray(cValue) ? JSON.stringify(cValue) : cValue
       if (prevComputed[cKey] === _cValue) continue
       const cWatchers = userDefinedWatchers.get(watchers[cKey]) ?? new Set()
-      const cDestroy = (cWatcher: Watcher) => new Promise(resolve => {
+      const cGetDestroy = (cWatcher: Watcher) => () => new Promise(resolve => {
 
         // use 0 timeout to avoid interfering with async actions
         setTimeout(() => {
           resolve(cWatchers.delete(cWatcher))
         })
       })
-      cWatchers.forEach(watcher => watcher(cValue, cDestroy))
+      cWatchers.forEach(cWatcher => cWatcher(cValue, cGetDestroy(cWatcher)))
 
       // tell the browser extension about the new computed value
       if (!enableDevTools || typeof window === 'undefined') continue

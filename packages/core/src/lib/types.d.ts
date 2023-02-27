@@ -13,8 +13,7 @@ export type ActionEntry = {
   mutations: Mutation[];
 }
 
-export type DestroyWatcher = (watcher: Watcher) => void
-export type Watcher = (value: unknown, destroy: DestroyWatcher) => void;
+export type Watcher = (value: unknown, destroy: () => void) => void;
 
 export type AddWatcher = {
   (watcher: Watcher): void;
