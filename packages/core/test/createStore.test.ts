@@ -1,7 +1,8 @@
-import { createStore } from '../src/index';
+import { createStore } from '../src/index'
+import { describe, it, expect } from 'vitest'
 
 describe('createStore', () => {
-  it ('creates a state object', () => {
+  it('creates a state object', () => {
     const store = createStore({
       name: 'demo',
       state: {
@@ -10,9 +11,9 @@ describe('createStore', () => {
           nested: 'hello world',
         },
       },
-    });
-    store.getters.topLevel;
-    store.getters.nested.nested;
+    })
+    store.getters.topLevel
+    store.getters.nested.nested
     expect(true).toBe(true)
-  });
-});
+  })
+})
